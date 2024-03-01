@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>youtube print test page</h1>
+<table>
+    <thead>
+    <tr>
+        <td>TITLE</td>
+        <td>URL</td>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="l : ${list}">
+        <tr>
+            <td th:text="${l.title}"></td>
+            <td th:text="${l.url}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+</body>
+</html>
