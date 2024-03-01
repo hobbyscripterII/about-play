@@ -11,4 +11,5 @@ public class YoutubeInfoGetVo {
     private String title;
     private String videoUrl;
     private String thumbnailUrl;
+    private String description;
 }

@@ -1,4 +1,4 @@
-package com.project.youtubeplaylistrecommend.common;
+package com.project.youtubeplaylistrecommend.youtube;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -16,10 +16,10 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class YoutubeApi {
+public class YoutubeService {
     @Value("${youtube.apikey}")
     private String apiKey;
-    private String videoPrefixUrl = "https://www.youtube.com/watch?v=";
+    private String videoUrl = "https://www.youtube.com/watch?v=";
     private String thumbnailPrefixUrl = "http://img.youtube.com/vi/";
     private String thumbnailSuffixUrl = "/hqdefault.jpg";
 
@@ -46,8 +46,9 @@ public class YoutubeApi {
             return list.stream()
                     .map(item -> YoutubeInfoGetVo.builder()
                             .title(item.getSnippet().getTitle())
-                            .videoUrl(videoPrefixUrl + item.getId().getVideoId())
+                            .videoUrl(videoUrl + item.getId().getVideoId())
                             .thumbnailUrl(thumbnailPrefixUrl + item.getId().getVideoId() + thumbnailSuffixUrl)
+                            .description(item.getSnippet().getDescription())
                             .build())
                     .toList();
         }

@@ -25,6 +25,9 @@
                         <td><a th:href="${l.videoUrl}" th:text="${l.title}" target="_blank">title</a></td>
                         <td><img th:src="${l.thumbnailUrl}" style="width: 200px"></td>
                     </tr>
+                    <tr>
+                        <td colspan="2" th:text="${l.description}"></td>
+                    </tr>
                 </th:block>
                 </tbody>
             </table>
@@ -38,6 +41,7 @@
         if(!keyword) {
             alert('검색어를 입력하지 않으셨습니다.');
         } else {
+            console.log("keyword = ", keyword);
             location.href = '/search-result/' + keyword;
         }
     }

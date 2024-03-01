@@ -63,3 +63,11 @@ main {
     justify-content: center;
     display: flex;
 }
+
+.modal-open {
+    padding-right: 0px !important;
+}
+
+#input-video-link {
+    margin-bottom: 40px;
+}

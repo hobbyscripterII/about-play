@@ -5,6 +5,7 @@
       layout:decorate="~{layout/default-layout}"
       layout:fragment="main">
 <main>
-<h1>board list</h1>
+    <h1 th:text="${title}"></h1>
+    <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/write}'|">작성</button>
 </main>
 </html>

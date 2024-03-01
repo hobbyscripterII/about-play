@@ -12,12 +12,18 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/board}">공지사항
+                    <a class="nav-link active" th:href="@{/board(category = 1)}">notice
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/search}">유튜브 검색(테스트 페이지)</a>
+                    <a class="nav-link" th:href="@{/board(category = 2)}">playlist</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/board(category = 3)}">free</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/search}">youtube search(api test)</a>
                 </li>
 <!--                <li class="nav-item">-->
 <!--                    <a class="nav-link" href="#">Pricing</a>-->

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}"
+      layout:fragment="main">
+<main>
+    <h1>write page</h1>
+    <div class="modal" id="modal-insert-video">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">youtube link insert</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="input-video-url" placeholder="유튜브 링크를 붙여넣어주세요." th:onchange="">
+
+                    <div class="div-video">
+                        <!--                        <iframe src="https://www.youtube.com/embed/dihIHLhr2J4" width="435px" height="300px">-->
+                        <!--                        </iframe>-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form class="form-search-result">
+        <table class="table table-secondary" style="width: 700px">
+            <tbody>
+            <tr>
+                <th scope="col" class="th-write-table">TITLE</th>
+                <th><input type="text" class="form-control" placeholder="제목을 입력하세요."></th>
+            </tr>
+            <tr>
+                <th scope="col" class="th-write-table">VIDEO LINK INSERT</th>
+                <th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">VIDEO LINK INSERT</button></th>
+            </tr>
+            <tr>
+                <th colspan="2"><textarea class="form-control" placeholder="내용을 입력하세요." style="resize: none; height: 300px"></textarea></th>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</main>
+
+<script>
+    const videoUrl = $('#input-video-url');
+
+    videoUrl.change(function() {
+        const videoId = videoIdCheck(videoUrl);
+
+        if(videoId) {
+            $('.div-video').html('<iframe src="https://www.youtube.com/embed/"' + videoId + ' width="435px" height="300px"></object>');
+        } else {
+            alert('링크를 업로드할 수 없습니다. 링크 확인 후 다시 시도해주세요.');
+        }
+    });
+
+    function videoIdCheck(url) {
+        const regex = '[?&]v=([^?&]+)/';
+        if(url.match(regex)) {
+            return url.match(regex)[1];
+        } else {
+            return null;
+        }
+    }
+</script>
+</html>
