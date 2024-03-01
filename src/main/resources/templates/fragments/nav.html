@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="nav">
+
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">유튜브 플레이리스트 추천 프로젝트</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/board}">공지사항
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/search}">유튜브 검색(테스트 페이지)</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">Pricing</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">About</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
+<!--                    <div class="dropdown-menu">-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Another action</a>-->
+<!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        <a class="dropdown-item" href="#">Separated link</a>-->
+<!--                    </div>-->
+<!--                </li>-->
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!--<nav>-->
+<!--    <ul class="nav-parent">-->
+<!--        <a th:href="@{#}">커뮤니티</a>-->
+<!--        <div class="nav-child-wrap">-->
+<!--            <li class="nav-child"><a th:href="@{#}">공지사항</a></li>-->
+<!--            <li class="nav-child"><a th:href="@{#}">자유 게시판</a></li>-->
+<!--            <li class="nav-child"><a th:href="@{#}">건의 게시판</a></li>-->
+<!--            <li class="nav-child"><a th:href="@{#}">질문 게시판</a></li>-->
+<!--        </div>-->
+<!--    </ul>-->
+
+<!--    <ul class="nav-parent">-->
+<!--        <a th:href="@{#}">가계부 서비스</a>-->
+<!--        <div class="nav-child-wrap">-->
+<!--            <li class="nav-child"><a th:href="@{#}">사용 설명서</a></li>-->
+<!--            <li class="nav-child"><a th:href="@{#}">가계부</a></li>-->
+<!--            <li class="nav-child"><a th:href="@{#}">자산현황</a></li>-->
+<!--            <li class="nav-child"><a></a></li>-->
+<!--        </div>-->
+<!--    </ul>-->
+
+<!--    <ul class="nav-parent"><a th:href="@{/sign-up}">회원가입</a></ul>-->
+<!--    <ul class="nav-parent"><a th:href="@{/sign-in}">로그인</a></ul>-->
+<!--&lt;!&ndash;    <ul class="nav-parent"><a th:href="@{/sign-out}">로그아웃</a></ul>&ndash;&gt;-->
+<!--</nav>-->
+<div class="banner">
+    <span>banner div</span>
+</div>
+</html>

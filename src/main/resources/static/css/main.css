@@ -1,0 +1,65 @@
+main {
+    position: absolute;
+    top: 290px;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 5px 5px 400px 5px;
+    box-sizing: border-box;
+}
+
+.form-sign-up {
+    display: block;
+    width: 100%;
+}
+
+#div-teams-of-use {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.errors, .errors-msg {
+    border-color: #dc3545;
+    color: red;
+    /*font-size: 12px;*/
+    font-weight: bold;
+}
+
+.errors-msg {
+    display: block;
+    width: 100%;
+    /*text-align: right;*/
+}
+
+.td-sign-up, .td-sign-in {
+    width: 130px;
+}
+
+#tr-email-auth {
+    display: none;
+}
+
+/*#input-email-auth {*/
+/*    display: block;*/
+/*}*/
+
+/* ..... */
+#form-search {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#input-keyword {
+    width: 280px;
+    margin-right: 10px;
+}
+
+.form-search-result {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}

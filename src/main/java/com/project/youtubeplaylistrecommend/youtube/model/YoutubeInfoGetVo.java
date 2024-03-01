@@ -9,5 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class YoutubeInfoGetVo {
     private String title;
-    private String url;
+    private String videoUrl;
+    private String thumbnailUrl;
 }

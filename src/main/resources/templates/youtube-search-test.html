@@ -1,27 +1,45 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>youtube print test page</h1>
-<table>
-    <thead>
-    <tr>
-        <td>TITLE</td>
-        <td>URL</td>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="l : ${list}">
-        <tr>
-            <td th:text="${l.title}"></td>
-            <td th:text="${l.url}"></td>
-        </tr>
-    </th:block>
-    </tbody>
-</table>
-</body>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}"
+      layout:fragment="main">
+<main>
+<h1>youtube search test page</h1>
+<form id="form-search">
+    <input type="text" class="form-control" id="input-keyword" placeholder="유튜브 검색어를 입력해보세요." autocomplete="off">
+    <input type="button" class="btn btn-primary" id="btn-search" value="검색" onclick="search()">
+</form>
+    <form class="form-search-result">
+        <th:block th:if="${list != null}">
+            <table class="table table-secondary" style="width: 700px">
+                <thead>
+                <tr>
+                    <th scope="col">TITLE</th>
+                    <th scope="col">THUMBNAIL</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="l : ${list}">
+                    <tr>
+                        <td><a th:href="${l.videoUrl}" th:text="${l.title}" target="_blank">title</a></td>
+                        <td><img th:src="${l.thumbnailUrl}" style="width: 200px"></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </th:block>
+    </form>
+</main>
+
+<script>
+    function search() {
+        const keyword = $('#input-keyword').val();
+        if(!keyword) {
+            alert('검색어를 입력하지 않으셨습니다.');
+        } else {
+            location.href = '/search-result/' + keyword;
+        }
+    }
+</script>
 </html>

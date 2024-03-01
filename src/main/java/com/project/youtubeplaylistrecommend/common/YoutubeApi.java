@@ -19,7 +19,9 @@ import java.util.List;
 public class YoutubeApi {
     @Value("${youtube.apikey}")
     private String apiKey;
-    private String prefixUrl = "https://www.youtube.com/watch?v=";
+    private String videoPrefixUrl = "https://www.youtube.com/watch?v=";
+    private String thumbnailPrefixUrl = "http://img.youtube.com/vi/";
+    private String thumbnailSuffixUrl = "/hqdefault.jpg";
 
     // youtube client 생성
     public List<YoutubeInfoGetVo> searchVideo(String keyword) throws IOException {
@@ -44,7 +46,8 @@ public class YoutubeApi {
             return list.stream()
                     .map(item -> YoutubeInfoGetVo.builder()
                             .title(item.getSnippet().getTitle())
-                            .url(prefixUrl + item.getId().getVideoId())
+                            .videoUrl(videoPrefixUrl + item.getId().getVideoId())
+                            .thumbnailUrl(thumbnailPrefixUrl + item.getId().getVideoId() + thumbnailSuffixUrl)
                             .build())
                     .toList();
         }
