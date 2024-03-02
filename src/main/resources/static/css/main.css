@@ -71,3 +71,9 @@ main {
 #input-video-link {
     margin-bottom: 40px;
 }
+
+.div-video {
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: bold;
+}
