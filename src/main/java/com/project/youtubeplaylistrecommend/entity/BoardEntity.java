@@ -5,8 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
 @Data
-@Table(name = "board_tbl")
 @Entity
+@Table(name = "board_tbl")
 public class BoardEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

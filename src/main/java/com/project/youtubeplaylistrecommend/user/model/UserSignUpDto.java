@@ -1,4 +1,4 @@
-package com.project.youtubeplaylistrecommend.User.model;
+package com.project.youtubeplaylistrecommend.user.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

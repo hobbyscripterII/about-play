@@ -87,3 +87,8 @@ main {
     text-align: center;
     line-height: 50px;
 }
+
+table, .table {
+    margin: 0;
+    padding: 0;
+}

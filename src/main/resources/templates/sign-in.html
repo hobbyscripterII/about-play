@@ -5,9 +5,9 @@
       layout:decorate="~{layout/default-layout}"
       layout:fragment="main">
 <main>
-    <h1>sign in</h1>
+    <h1>로그인</h1>
     <div class="common-wrap">
-        <form id="f" th:action="@{/sign-in}" th:method="post" style="width: 350px">
+        <form id="form-sign-in" th:action="@{/sign-in}" th:method="post" style="width: 350px">
             <table class="table table-secondary" th:object="${dto}">
                 <tbody>
                 <tr class="alert alert-dismissible alert-danger center" role="alert" th:if="${param.error != null}" style="margin-bottom: 20px">
@@ -19,15 +19,29 @@
                 </tr>
                 <tr>
                     <td class="td-sign-in">패스워드</td>
-                    <td><input type="password" id="upw" name="upw" class="form-control"></td>
+                    <td><input type="password" id="pwd" name="pwd" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td style="text-align: right"><button type="button" class="btn btn-success" th:onclick="login()">로그인</button></td>
-                    <td style="text-align: right"><button type="button" class="btn btn-success" style="width: 210px" th:onclick="|location.href='@{/sign-up}'|">이메일 회원가입</button></td>
+                    <td colspan="2"><button type="button" class="btn btn-primary" th:onclick="login()" style="width: 100%">로그인</button></td>
                 </tr>
                 </tbody>
             </table>
+            <div style="text-align: right">
+                <button type="button" class="btn btn-link" th:onclick="|location.href='@{/sign-up}'|" style="padding: 0">이메일 회원가입</button>
+            </div>
         </form>
     </div>
 </main>
+
+<script>
+    function login() {
+        if(!$('#email').val()) {
+            alert('이메일을 입력하지 않으셨습니다.');
+        } else if(!$('#pwd').val()) {
+            alert('비밀번호를 입력하지 않으셨습니다.');
+        } else {
+            $('#form-sign-in').submit();
+        }
+    }
+</script>
 </html>

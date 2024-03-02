@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@Table(name = "genre_code_tbl")
 @Entity
+@Table(name = "genre_code_tbl")
 public class GenreCodeEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

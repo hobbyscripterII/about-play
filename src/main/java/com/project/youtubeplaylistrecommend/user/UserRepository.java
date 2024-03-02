@@ -1,4 +1,4 @@
-package com.project.youtubeplaylistrecommend.User;
+package com.project.youtubeplaylistrecommend.user;
 
 import com.project.youtubeplaylistrecommend.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
 package com.project.youtubeplaylistrecommend.security;
 
-import com.project.youtubeplaylistrecommend.User.UserRepository;
+import com.project.youtubeplaylistrecommend.user.UserRepository;
 import com.project.youtubeplaylistrecommend.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

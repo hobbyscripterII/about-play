@@ -1,4 +1,4 @@
-package com.project.youtubeplaylistrecommend.User.model;
+package com.project.youtubeplaylistrecommend.user.model;
 
 import lombok.Data;
 

@@ -8,8 +8,8 @@ import org.hibernate.annotations.ColumnDefault;
 import java.util.List;
 
 @Data
-@Table(name = "playlist_tbl")
 @Entity
+@Table(name = "playlist_tbl")
 public class PlaylistEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

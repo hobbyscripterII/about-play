@@ -2,8 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       th:fragment="nav">
-
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/}">유튜브 플레이리스트 추천 프로젝트</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,18 +11,18 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/board(category = 1)}">notice
+                    <a class="nav-link active" th:href="@{/board(category = 1)}">공지 게시판
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/board(category = 2)}">playlist</a>
+                    <a class="nav-link" th:href="@{/board(category = 2)}">플레이리스트 추천</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/board(category = 3)}">free</a>
+                    <a class="nav-link" th:href="@{/board(category = 3)}">자유 게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/search}">youtube search(api test)</a>
+                    <a class="nav-link" th:href="@{/search}">유튜브 검색(API 테스트용)</a>
                 </li>
 <!--                <li class="nav-item">-->
 <!--                    <a class="nav-link" href="#">Pricing</a>-->
@@ -44,7 +43,7 @@
             </ul>
             <form class="d-flex">
                 <img onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=cb038f5f9a3ebddca7cc97a4d8f6d398&redirect_uri=http://localhost:8080/accountbook/kakao-login&response_type=code'" th:src="@{/img/img-btn-kakao.png}" style="height: 45px; margin-right: 10px">
-                <button type="button" class="btn btn-dark" style="height: 45px; padding: 0 10px 0 10px" th:onclick="|location.href='@{/sign-in}'|">이메일 회원가입/로그인</button>
+                <button type="button" class="btn btn-dark" th:onclick="|location.href='@{/sign-in}'|" style="height: 45px; padding: 0 10px 0 10px; font-size: 14px; font-weight: bold">이메일 회원가입/로그인</button>
 <!--                <input class="form-control me-sm-2" type="search" placeholder="Search">-->
 <!--                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>-->
             </form>
@@ -52,31 +51,6 @@
     </div>
 </nav>
 
-<!--<nav>-->
-<!--    <ul class="nav-parent">-->
-<!--        <a th:href="@{#}">커뮤니티</a>-->
-<!--        <div class="nav-child-wrap">-->
-<!--            <li class="nav-child"><a th:href="@{#}">공지사항</a></li>-->
-<!--            <li class="nav-child"><a th:href="@{#}">자유 게시판</a></li>-->
-<!--            <li class="nav-child"><a th:href="@{#}">건의 게시판</a></li>-->
-<!--            <li class="nav-child"><a th:href="@{#}">질문 게시판</a></li>-->
-<!--        </div>-->
-<!--    </ul>-->
-
-<!--    <ul class="nav-parent">-->
-<!--        <a th:href="@{#}">가계부 서비스</a>-->
-<!--        <div class="nav-child-wrap">-->
-<!--            <li class="nav-child"><a th:href="@{#}">사용 설명서</a></li>-->
-<!--            <li class="nav-child"><a th:href="@{#}">가계부</a></li>-->
-<!--            <li class="nav-child"><a th:href="@{#}">자산현황</a></li>-->
-<!--            <li class="nav-child"><a></a></li>-->
-<!--        </div>-->
-<!--    </ul>-->
-
-<!--    <ul class="nav-parent"><a th:href="@{/sign-up}">회원가입</a></ul>-->
-<!--    <ul class="nav-parent"><a th:href="@{/sign-in}">로그인</a></ul>-->
-<!--&lt;!&ndash;    <ul class="nav-parent"><a th:href="@{/sign-out}">로그아웃</a></ul>&ndash;&gt;-->
-<!--</nav>-->
 <div class="banner">
     <span>banner div</span>
 </div>

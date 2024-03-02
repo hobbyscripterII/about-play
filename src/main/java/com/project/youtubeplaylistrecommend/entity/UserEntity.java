@@ -33,11 +33,11 @@ public class UserEntity extends BaseEntity {
     @Column(length = 200)
     private String pic;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
     @ColumnDefault("'USER'")
     private String role;
 
-    @Column(columnDefinition = "UNSIGNED", nullable = false)
+    @Column(columnDefinition = "INT UNSIGNED", nullable = false)
     @ColumnDefault("'0'")
     private int visit;
 

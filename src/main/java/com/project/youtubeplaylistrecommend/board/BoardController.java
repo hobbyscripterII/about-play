@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/board")
 public class BoardController {
     @GetMapping
-    public String getBoard(@RequestParam int category, Model model) {
+    public String getBoard(@RequestParam(name = "category") int category, Model model) {
         model.addAttribute("title", getBoardTitle(category));
         return "/board/list";
     }

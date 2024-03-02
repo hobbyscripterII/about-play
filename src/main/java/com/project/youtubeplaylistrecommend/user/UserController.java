@@ -1,7 +1,7 @@
-package com.project.youtubeplaylistrecommend.User;
+package com.project.youtubeplaylistrecommend.user;
 
-import com.project.youtubeplaylistrecommend.User.model.UserSignInDto;
-import com.project.youtubeplaylistrecommend.User.model.UserSignUpDto;
+import com.project.youtubeplaylistrecommend.user.model.UserSignInDto;
+import com.project.youtubeplaylistrecommend.user.model.UserSignUpDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
