@@ -1,9 +1,9 @@
-package com.project.youtubeplaylistrecommend.user.model;
+package com.project.youtubeplaylistrecommend.email.model;
 
 import lombok.Data;
 
 @Data
-public class UserEmailAuthDto {
+public class EmailSendDto {
     private String email;
     private String emailAuthCode;
 }
