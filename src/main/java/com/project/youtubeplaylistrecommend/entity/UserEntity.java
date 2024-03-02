@@ -49,9 +49,9 @@ public class UserEntity extends BaseEntity {
     @ColumnDefault("'N'")
     private char deleteFl;
 
-    @CreatedDate
-    @Column(updatable = false, nullable = false)
-    private LocalDateTime createdAt;
+//    @CreatedDate
+//    @Column(updatable = false, nullable = false)
+//    private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;

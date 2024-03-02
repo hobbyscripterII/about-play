@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}"
+      layout:fragment="main">
+<main>
+    <h1>sign in</h1>
+    <div class="common-wrap">
+        <form id="f" th:action="@{/sign-in}" th:method="post" style="width: 350px">
+            <table class="table table-secondary" th:object="${dto}">
+                <tbody>
+                <tr class="alert alert-dismissible alert-danger center" role="alert" th:if="${param.error != null}" style="margin-bottom: 20px">
+                    <td colspan="2" style="background-color: #f7dddc !important">자격 증명에 실패하였습니다.</td>
+                </tr>
+                <tr>
+                    <td class="td-sign-in">이메일</td>
+                    <td><input type="text" id="email" name="email" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td class="td-sign-in">패스워드</td>
+                    <td><input type="password" id="upw" name="upw" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right"><button type="button" class="btn btn-success" th:onclick="login()">로그인</button></td>
+                    <td style="text-align: right"><button type="button" class="btn btn-success" style="width: 210px" th:onclick="|location.href='@{/sign-up}'|">이메일 회원가입</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</main>
+</html>

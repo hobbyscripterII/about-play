@@ -22,6 +22,9 @@ repositories {
 }
 
 dependencies {
+    // validated
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.2.2'
+
     // youtube API
     implementation 'com.google.api-client:google-api-client:1.30.9'
     implementation 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
@@ -34,7 +37,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.2'
@@ -46,7 +49,7 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
 

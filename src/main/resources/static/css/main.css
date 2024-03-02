@@ -82,3 +82,8 @@ main {
     resize: none;
     height: 100px;
 }
+
+.td-sign-in {
+    text-align: center;
+    line-height: 50px;
+}

@@ -20,10 +20,16 @@ a {
 }
 
 body {
-    background-image: linear-gradient(90deg, #ED4264 20% ,#FFEDBC 80%);
+    background-image: linear-gradient(90deg, #ED4264 20% ,#FFEDBC 80%) !important;
 }
 
 .th-write-table {
     text-align: center;
     line-height: 50px;
+}
+
+.common-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
