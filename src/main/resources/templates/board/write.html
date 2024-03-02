@@ -19,12 +19,10 @@
                     <input type="text" class="form-control" id="input-video-url" placeholder="유튜브 링크를 붙여넣어주세요." th:onchange="">
 
                     <div class="div-video">
-                        <!--                        <iframe src="https://www.youtube.com/embed/dihIHLhr2J4" width="435px" height="300px">-->
-                        <!--                        </iframe>-->
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">save</button>
+                    <button type="button" class="btn btn-primary" id="btn-video-save" data-bs-dismiss="modal">save</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
                 </div>
             </div>
@@ -39,12 +37,30 @@
                 <th><input type="text" class="form-control" placeholder="제목을 입력하세요."></th>
             </tr>
             <tr>
-                <th scope="col" class="th-write-table">VIDEO LINK INSERT</th>
-                <th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">VIDEO LINK INSERT</button></th>
+                <th scope="col" class="th-write-table">GENRE</th>
+                <th>
+                    <select class="form-select" id="exampleSelect1">
+                        <option>장르를 선택해주세요.</option>
+<!--                        <th:block th:each="">-->
+<!--                            <option></option>-->
+<!--                        </th:block>-->
+                    </select>
+                </th>
             </tr>
             <tr>
-                <th colspan="2"><textarea class="form-control" placeholder="내용을 입력하세요." style="resize: none; height: 300px"></textarea></th>
+                <th scope="col" class="th-write-table">PLAYLIST INSERT</th>
+                <th><button type="button" class="btn btn-light" id="btn-playlist-insert" style="width: 100%">PLAYLIST INSERT</button></th>
             </tr>
+            <!--            <tr>-->
+            <!--                <th scope="col" class="th-write-table">PLAYLIST LINK INSERT</th>-->
+            <!--                <th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">PLAYLIST LINK INSERT</button></th>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <th colspan="2" class="th-video"></th>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <th colspan="2"><textarea class="form-control" placeholder="플레이리스트에 대한 설명을 입력해주세요." style="resize: none; height: 100px"></textarea></th>-->
+            <!--            </tr>-->
             </tbody>
         </table>
     </form>
@@ -52,20 +68,33 @@
 
 <script>
     const videoUrl = $('#input-video-url');
+    let videoId;
+    let videoList = [];
+
+    $('#btn-playlist-insert').click(function () {
+        const row1 = '<tr><th scope="col" class="th-write-table">PLAYLIST LINK INSERT</th><th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">PLAYLIST LINK INSERT</button></th></tr>';
+        const row2 = '<tr><th colspan="2" class="th-video"></th></tr>';
+        const row3 = '<tr><th colspan="2"><textarea class="form-control textarea-video-description" placeholder="플레이리스트에 대한 설명을 입력해주세요."></textarea></th></tr>';
+        $('tbody').append(row1, row2, row3);
+    });
 
     videoUrl.change(function() {
         const videoUrlValue = videoUrl.val();
-        console.log('videoUrlValue = ', videoUrlValue);
         const match = videoUrlValue.match(/[?&]v=([^?&]+)/);
-        console.log('match = ', match);
 
         if(match && match[1]) {
-            console.log('match = ', match);
-            console.log('match[1] = ', match[1]);
-            $('.div-video').html('<object type="text/html" width="435px" height="300px" data="https://www.youtube.com/embed/'+ match[1] +'"></object>');
+            videoId = match[1];
+            $('.div-video').html('<object type="text/html" width="435px" height="300px" data="https://www.youtube.com/embed/'+ videoId +'"></object>');
         } else {
             $('.div-video').html('<p>해당 video를 불러올 수 없습니다. 링크 확인 후 다시 시도해주세요.</p>');
         }
+    });
+
+    $('#btn-video-save').click(function () {
+        alert('동영상이 저장되었습니다.');
+        videoList.push(videoId);
+        // last() - 마지막 요소만 변경
+        $('.th-video').last().html('<object type="text/html" width="700px" height="400px" data="https://www.youtube.com/embed/'+ videoId +'"></object>');
     });
 </script>
 </html>

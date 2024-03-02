@@ -77,3 +77,8 @@ main {
     margin-top: 10px;
     font-weight: bold;
 }
+
+.textarea-video-description {
+    resize: none;
+    height: 100px;
+}
