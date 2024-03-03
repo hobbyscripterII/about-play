@@ -15,7 +15,7 @@ public class YoutubeController {
     private final YoutubeService youtubeService;
 
     @GetMapping("/search")
-    public String searchForm() {
+    public String search() {
         return "/youtube-search-test";
     }
 

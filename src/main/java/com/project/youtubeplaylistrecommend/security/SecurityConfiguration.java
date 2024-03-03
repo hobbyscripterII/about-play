@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                         .anyRequest().hasRole("ADMIN")
                 );
         httpSecurity.logout(out -> {
-            out.logoutUrl("/logout")
+            out.logoutUrl("/sign-out")
                     .addLogoutHandler((request, response, authentication) -> {
                         HttpSession session = request.getSession();
                         if (session != null) {

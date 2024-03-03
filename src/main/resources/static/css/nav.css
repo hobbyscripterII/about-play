@@ -75,3 +75,10 @@ nav {
     font-weight: bold;
     line-height: 200px;
 }
+
+.btn-nav {
+    height: 45px;
+    padding: 0 10px 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
