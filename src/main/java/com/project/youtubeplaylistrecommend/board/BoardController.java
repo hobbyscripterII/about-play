@@ -15,12 +15,15 @@ public class BoardController {
     @GetMapping
     public String getBoard(@RequestParam(name = "category") int category, Model model) {
         model.addAttribute("title", getBoardTitle(category));
+        if (category == BoardEnum.MUSIC_RECOMMEND.getCategory()) {
+            return "/board/list-playlist";
+        }
         return "/board/list";
     }
 
     @GetMapping("/write")
     public String insBoard(@RequestParam(name = "category") int category, Model model) {
-        if(category == 2) {
+        if (category == BoardEnum.MUSIC_RECOMMEND.getCategory()) {
             model.addAttribute("category", category);
             return "/board/write-playlist";
         }

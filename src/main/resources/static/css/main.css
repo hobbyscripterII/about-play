@@ -88,3 +88,10 @@ table, .table {
 #tr-email-auth {
     display: none;
 }
+
+.div-btn-group-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-right: 2rem;
+}
