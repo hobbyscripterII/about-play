@@ -1,11 +1,11 @@
 main {
     position: absolute;
-    top: 290px;
+    top: 258px;
     left: 0;
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    padding: 5px 5px 400px 5px;
+    padding: 5px 5px 200px 5px;
     box-sizing: border-box;
 }
 
@@ -94,4 +94,41 @@ table, .table {
     display: flex;
     justify-content: end;
     margin-right: 2rem;
+}
+
+.div-playlist-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.img-playlist-thumbnail {
+    width: 100%;
+}
+
+.div-playlist-card {
+    max-width: 25rem;
+}
+
+.span-playlist-header, .span-playlist-body {
+    font-size: 12px;
+}
+
+.span-playlist-footer {
+    font-size: 13px;
+}
+
+.span-playlist-header, .span-playlist-footer {
+    font-weight: bold;
+}
+
+.div-playlist-row-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+.th-write-table {
+    text-align: center;
+    line-height: 38px;
 }

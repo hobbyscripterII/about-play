@@ -10,6 +10,6 @@ public enum BoardEnum {
     MUSIC_RECOMMEND(2, "플레이리스트 추천"),
     FREE(3, "자유 게시판");
 
-    private int category;
-    private String title;
+    private int code;
+    private String name;
 }

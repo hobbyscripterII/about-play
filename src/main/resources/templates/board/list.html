@@ -6,6 +6,6 @@
       layout:fragment="main">
 <main>
     <h1 th:text="${title}"></h1>
-    <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/write(category=${param.category})}'|">작성</button>
+    <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/write(code=${param.code})}'|">작성</button>
 </main>
 </html>

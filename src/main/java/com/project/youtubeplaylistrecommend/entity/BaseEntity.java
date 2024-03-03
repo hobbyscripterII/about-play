@@ -22,12 +22,12 @@ public class BaseEntity {
 
     @CreatedBy
     @Column(updatable = false, columnDefinition = "BIGINT UNSIGNED", nullable = false)
-    private long firstCreatedUser;
+    private Long firstCreatedUser;
 
     @LastModifiedDate
     private LocalDateTime lastUpdatedAt;
 
     @LastModifiedBy
     @Column(columnDefinition = "BIGINT UNSIGNED")
-    private long lastUpdatedUser;
+    private Long lastUpdatedUser;
 }

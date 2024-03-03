@@ -5,40 +5,22 @@
       layout:decorate="~{layout/default-layout}"
       layout:fragment="main">
 
-<style>
-    .div-playlist-wrap {
-        display: flex;
-        width: 100%;
-        justify-content: space-around;
-        flex-wrap: wrap;
-    }
-
-    .img-playlist-thumbnail {
-        width: 100%;
-    }
-
-    .div-playlist-card {
-        max-width: 25rem;
-    }
-
-    .span-playlist-header {
-        font-size: 12px;
-        font-weight: bold;
-    }
-
-    .span-playlist-body {
-        font-size: 12px;
-    }
-</style>
 <main>
     <h1 th:text="${title}"></h1>
 
     <div class="div-playlist-wrap">
         <div class="card bg-dark mb-3 div-playlist-card">
             <div class="card-header">
-                <span class="span-playlist-header">제목: </span>
-                <span class="span-playlist-body">봉길에게 감기는 플리🐠</span>
-                <div style="display: flex; justify-content: space-between">
+                <div class="div-playlist-row-wrap">
+                    <div>
+                        <span class="span-playlist-header">제목: </span>
+                        <span class="span-playlist-body">봉길에게 감기는 플리🐠</span>
+                    </div>
+                    <div>
+                        <span class="span-playlist-header">2024-03-03</span>
+                    </div>
+                </div>
+                <div class="div-playlist-row-wrap">
                     <div>
                         <span class="span-playlist-header">작성자: </span>
                         <span class="span-playlist-body">관리자</span>
@@ -53,15 +35,24 @@
             </div>
             <div class="card-body">
                 <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/2atXpzIDdGY/hqdefault.jpg">
-                <p class="card-text span-playlist-body">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card-footer text-muted span-playlist-footer">
+                파묘 보셨다면 봉길에게 한번 더 감겨보세요.
             </div>
         </div>
 
         <div class="card bg-dark mb-3 div-playlist-card">
             <div class="card-header">
-                <span class="span-playlist-header">제목: </span>
-                <span class="span-playlist-body">일본 감성 하우스 플리🎧</span>
-                <div style="display: flex; justify-content: space-between">
+                <div class="div-playlist-row-wrap">
+                    <div>
+                        <span class="span-playlist-header">제목: </span>
+                        <span class="span-playlist-body">일본 감성 하우스 플리🎧</span>
+                    </div>
+                    <div>
+                        <span class="span-playlist-header">2024-03-03</span>
+                    </div>
+                </div>
+                <div class="div-playlist-row-wrap">
                     <div>
                         <span class="span-playlist-header">작성자: </span>
                         <span class="span-playlist-body">관리자</span>
@@ -76,15 +67,24 @@
             </div>
             <div class="card-body">
                 <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/PYfhbYIxBxE/hqdefault.jpg">
-                <p class="card-text span-playlist-body">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card-footer text-muted span-playlist-footer">
+                일본은 안가봤지만 일본 신주쿠 쪽 클럽가면 나올 것만 같은..🙄
             </div>
         </div>
 
         <div class="card bg-dark mb-3 div-playlist-card">
             <div class="card-header">
-                <span class="span-playlist-header">제목: </span>
-                <span class="span-playlist-body">오렌지가 생각나는 하우스 플리🍊</span>
-                <div style="display: flex; justify-content: space-between">
+                <div class="div-playlist-row-wrap">
+                    <div>
+                        <span class="span-playlist-header">제목: </span>
+                        <span class="span-playlist-body">오렌지가 생각나는 하우스 플리🍊</span>
+                    </div>
+                    <div>
+                        <span class="span-playlist-header">2024-03-03</span>
+                    </div>
+                </div>
+                <div class="div-playlist-row-wrap">
                     <div>
                         <span class="span-playlist-header">작성자: </span>
                         <span class="span-playlist-body">관리자</span>
@@ -99,15 +99,24 @@
             </div>
             <div class="card-body">
                 <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/dihIHLhr2J4/hqdefault.jpg">
-                <p class="card-text span-playlist-body">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card-footer text-muted span-playlist-footer">
+                출근길, 등굣길에 듣기좋은 플리인 것 같아서 올려요.
             </div>
         </div>
 
         <div class="card bg-dark mb-3 div-playlist-card">
             <div class="card-header">
-                <span class="span-playlist-header">제목: </span>
-                <span class="span-playlist-body">쌀쌀한 날엔 잔나비가 최고!</span>
-                <div style="display: flex; justify-content: space-between">
+                <div class="div-playlist-row-wrap">
+                    <div>
+                        <span class="span-playlist-header">제목: </span>
+                        <span class="span-playlist-body">쌀쌀한 날엔 잔나비가 최고!</span>
+                    </div>
+                    <div>
+                        <span class="span-playlist-header">2024-03-03</span>
+                    </div>
+                </div>
+                <div class="div-playlist-row-wrap">
                     <div>
                         <span class="span-playlist-header">작성자: </span>
                         <span class="span-playlist-body">관리자</span>
@@ -122,13 +131,15 @@
             </div>
             <div class="card-body">
                 <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/dcKuU3t_DVk/hqdefault.jpg">
-                <p class="card-text span-playlist-body">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card-footer text-muted span-playlist-footer">
+                잔나비 플리는 이거 하나면 돼요!
             </div>
         </div>
     </div>
 
     <div class="div-btn-group-wrap">
-        <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/write(category=${param.category})}'|">작성</button>
+        <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/write(code=${param.code})}'|">작성</button>
     </div>
 </main>
 </html>

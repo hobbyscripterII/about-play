@@ -5,22 +5,22 @@
       th:fragment="nav">
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">유튜브 플레이리스트 추천 프로젝트</a>
+        <a class="navbar-brand" th:href="@{/}">ABOUT PLAY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/board(category = 1)}">공지 게시판
+                    <a class="nav-link active" th:href="@{/board(code = 1)}">공지 게시판
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/board(category = 2)}">플레이리스트 추천</a>
+                    <a class="nav-link" th:href="@{/board(code = 2)}">플레이리스트 추천</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/board(category = 3)}">자유 게시판</a>
+                    <a class="nav-link" th:href="@{/board(code = 3)}">자유 게시판</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/search}">유튜브 검색(API 테스트용)</a>

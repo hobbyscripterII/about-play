@@ -22,28 +22,28 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btn-video-save" data-bs-dismiss="modal">save</button>
+                    <button type="button" class="btn btn-primary btn-video-save" data-bs-dismiss="modal">save</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <form class="form-search-result">
-        <table class="table table-secondary" style="width: 700px">
+    <form class="form-search-result form-playlist-insert">
+        <table class="table table-secondary" id="table-playlist-insert" style="width: 700px">
             <tbody>
             <tr>
                 <th scope="col" class="th-write-table">TITLE</th>
-                <th><input type="text" class="form-control" placeholder="제목을 입력하세요."></th>
+                <th><input type="text" id="title" class="form-control" placeholder="제목을 입력하세요."></th>
             </tr>
             <tr>
                 <th scope="col" class="th-write-table">GENRE</th>
                 <th>
-                    <select class="form-select" id="exampleSelect1">
-                        <option>장르를 선택해주세요.</option>
-<!--                        <th:block th:each="">-->
-<!--                            <option></option>-->
-<!--                        </th:block>-->
+                    <select class="form-select" id="genre">
+                        <option value="null" th:text="장르를 선택해주세요."></option>
+                        <th:block th:each="g : ${genre}">
+                            <option th:value="${g.igenre}" th:text="${g.genreName}"></option>
+                        </th:block>
                     </select>
                 </th>
             </tr>
@@ -51,6 +51,7 @@
                 <th scope="col" class="th-write-table">PLAYLIST INSERT</th>
                 <th><button type="button" class="btn btn-light" id="btn-playlist-insert" style="width: 100%">PLAYLIST INSERT</button></th>
             </tr>
+
             <!--            <tr>-->
             <!--                <th scope="col" class="th-write-table">PLAYLIST LINK INSERT</th>-->
             <!--                <th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">PLAYLIST LINK INSERT</button></th>-->
@@ -61,21 +62,49 @@
             <!--            <tr>-->
             <!--                <th colspan="2"><textarea class="form-control" placeholder="플레이리스트에 대한 설명을 입력해주세요." style="resize: none; height: 100px"></textarea></th>-->
             <!--            </tr>-->
+
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary" onclick="insert()" style="width: 100%">등록</button>
+                </td>
+            </tr>
             </tbody>
         </table>
     </form>
+
 </main>
 
-<script>
+<script th:inline="javascript">
     const videoUrl = $('#input-video-url');
     let videoId;
     let videoList = [];
 
+    function insert() {
+        const code = [[${param.code}]];
+        const genre = $(`#genre`).val();
+        const title = $(`#title`).val();
+        console.log(`code = `, code);
+        console.log(`genre = `, genre);
+        console.log(`title = `, title);
+        console.log(`videoList = `, videoList);
+        alert(`테스트`);
+
+        const tablePlayListInsert = $(`#table-playlist-insert`);
+        const playListInfo = [];
+
+        tablePlayListInsert.each(function () {
+
+
+        });
+    }
+
     $('#btn-playlist-insert').click(function () {
+        const row = $(`tbody`).find(`tr`).last();
         const row1 = '<tr><th scope="col" class="th-write-table">PLAYLIST LINK INSERT</th><th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">PLAYLIST LINK INSERT</button></th></tr>';
         const row2 = '<tr><th colspan="2" class="th-video"></th></tr>';
         const row3 = '<tr><th colspan="2"><textarea class="form-control textarea-video-description" placeholder="플레이리스트에 대한 설명을 입력해주세요."></textarea></th></tr>';
-        $('tbody').append(row1, row2, row3);
+        // `등록` 버튼 바로 앞에 행 삽입
+        row.before(row1, row2, row3);
     });
 
     videoUrl.change(function() {
@@ -90,7 +119,7 @@
         }
     });
 
-    $('#btn-video-save').click(function () {
+    $('.btn-video-save').click(function () {
         alert('동영상이 저장되었습니다.');
         videoList.push(videoId);
         // last() - 마지막 요소만 변경

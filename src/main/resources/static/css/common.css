@@ -23,11 +23,6 @@ a {
 /*    background-image: linear-gradient(90deg, #4e54c8 20% ,#8f94fb 80%) !important;*/
 /*}*/
 
-.th-write-table {
-    text-align: center;
-    line-height: 50px;
-}
-
 .common-wrap {
     width: 100%;
     display: flex;
