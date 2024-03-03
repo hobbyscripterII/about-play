@@ -23,7 +23,7 @@ main {
 .errors, .errors-msg {
     border-color: #dc3545;
     color: red;
-    /*font-size: 12px;*/
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -33,17 +33,9 @@ main {
     /*text-align: right;*/
 }
 
-.td-sign-up, .td-sign-in {
-    width: 130px;
+#input-email-auth {
+    display: block;
 }
-
-#tr-email-auth {
-    display: none;
-}
-
-/*#input-email-auth {*/
-/*    display: block;*/
-/*}*/
 
 /* ..... */
 #form-search {
@@ -85,10 +77,14 @@ main {
 
 .td-sign-in {
     text-align: center;
-    line-height: 50px;
+    line-height: 38px;
 }
 
 table, .table {
     margin: 0;
     padding: 0;
+}
+
+#tr-email-auth {
+    display: none;
 }

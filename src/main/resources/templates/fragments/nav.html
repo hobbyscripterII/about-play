@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       th:fragment="nav">
-<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/}">유튜브 플레이리스트 추천 프로젝트</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,22 +24,16 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/search}">유튜브 검색(API 테스트용)</a>
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#">Pricing</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="#">About</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
-<!--                    <div class="dropdown-menu">-->
-<!--                        <a class="dropdown-item" href="#">Action</a>-->
-<!--                        <a class="dropdown-item" href="#">Another action</a>-->
-<!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-<!--                        <div class="dropdown-divider"></div>-->
-<!--                        <a class="dropdown-item" href="#">Separated link</a>-->
-<!--                    </div>-->
-<!--                </li>-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자 페이지</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/admin">홈</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </li>
             </ul>
             <form class="d-flex">
                 <img onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=cb038f5f9a3ebddca7cc97a4d8f6d398&redirect_uri=http://localhost:8080/accountbook/kakao-login&response_type=code'" th:src="@{/img/img-btn-kakao.png}" style="height: 45px; margin-right: 10px">

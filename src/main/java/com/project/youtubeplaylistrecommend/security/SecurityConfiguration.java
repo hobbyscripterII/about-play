@@ -28,9 +28,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(a -> a
                         // 권한없이 접근 o
                         .requestMatchers(
-                                "/", "/css/**", "/js/**", "/img/**",
-                                "/error/**", "/access-denied?error",
+                                "/", "/css/**", "/js/**", "/img/**", // resources
+                                "/error/**", "/access-denied?error", // error
                                 "/sign-in", "/sign-up", "/sign-out",
+                                "/name-check", "/email/**", // 회원가입 시 필요 url
                                 "/board/**"
                         ).permitAll()
                         // 외에는 ADMIN만 접근 o

@@ -8,7 +8,7 @@
     <h1>로그인</h1>
     <div class="common-wrap">
         <form id="form-sign-in" th:action="@{/sign-in}" th:method="post" style="width: 350px">
-            <table class="table table-secondary" th:object="${dto}">
+            <table class="table" th:object="${dto}">
                 <tbody>
                 <tr class="alert alert-dismissible alert-danger center" role="alert" th:if="${param.error != null}" style="margin-bottom: 20px">
                     <td colspan="2" style="background-color: #f7dddc !important">자격 증명에 실패하였습니다.</td>
@@ -22,7 +22,7 @@
                     <td><input type="password" id="pwd" name="pwd" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><button type="button" class="btn btn-primary" th:onclick="login()" style="width: 100%">로그인</button></td>
+                    <td colspan="2"><button type="button" class="btn btn-primary" onclick="login()" style="width: 100%">로그인</button></td>
                 </tr>
                 </tbody>
             </table>

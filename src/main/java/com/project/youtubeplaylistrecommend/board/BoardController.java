@@ -19,8 +19,12 @@ public class BoardController {
     }
 
     @GetMapping("/write")
-    public String insBoard() {
-        return "/board/write";
+    public String insBoard(@RequestParam(name = "category") int category, Model model) {
+        if(category == 2) {
+            model.addAttribute("category", category);
+            return "/board/write-playlist";
+        }
+        return "/home";
     }
 
     private String getBoardTitle(int category) {

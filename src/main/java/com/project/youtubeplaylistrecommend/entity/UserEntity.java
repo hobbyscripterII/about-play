@@ -33,7 +33,7 @@ public class UserEntity extends BaseEntity {
     @Column(length = 200)
     private String pic;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, updatable = false, nullable = false)
     @ColumnDefault("'USER'")
     private String role;
 

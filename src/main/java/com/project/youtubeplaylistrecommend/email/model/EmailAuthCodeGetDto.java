@@ -3,7 +3,7 @@ package com.project.youtubeplaylistrecommend.email.model;
 import lombok.Data;
 
 @Data
-public class EmailSendDto {
+public class EmailAuthCodeGetDto {
     private String email;
-    private String emailAuthCode;
+    private String code;
 }

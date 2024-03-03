@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}"
+      layout:fragment="main">
+<script th:src="@{/js/sign-up.js}"></script>
+
+<main>
+    <h1>회원가입 완료</h1>
+    <div class="common-wrap">
+        <h2>회원가입이 완료되었습니다.</h2>
+        <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/sign-in}'|" style="padding: 0">홈으로</button>
+        <button type="button" class="btn btn-success" th:onclick="|location.href='@{/sign-in}'|" style="padding: 0">로그인</button>
+    </div>
+</main>
+</html>

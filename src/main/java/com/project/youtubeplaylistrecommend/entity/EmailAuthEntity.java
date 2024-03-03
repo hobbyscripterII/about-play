@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Table(name = "email_auth_tbl")
+@EntityListeners(AuditingEntityListener.class)
 public class EmailAuthEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +29,9 @@ public class EmailAuthEntity {
     private char authFl;
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(updatable = false, nullable = false)
     private LocalDateTime issuedAt;
 
+    @Column(updatable = false)
     private LocalDateTime authedAt;
 }
