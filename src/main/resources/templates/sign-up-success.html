@@ -8,10 +8,14 @@
 
 <main>
     <h1>회원가입 완료</h1>
-    <div class="common-wrap">
-        <h2>회원가입이 완료되었습니다.</h2>
-        <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/sign-in}'|" style="padding: 0">홈으로</button>
-        <button type="button" class="btn btn-success" th:onclick="|location.href='@{/sign-in}'|" style="padding: 0">로그인</button>
+    <div class="common-wrap" style="flex-wrap: wrap">
+        <div style="width: 100%">
+            <h2>회원가입이 완료되었습니다.</h2>
+        </div>
+        <div>
+            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/}'|">홈으로</button>
+            <button type="button" class="btn btn-success" th:onclick="|location.href='@{/sign-in}'|">로그인</button>
+        </div>
     </div>
 </main>
 </html>

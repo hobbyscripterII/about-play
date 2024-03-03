@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       th:fragment="nav">
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/}">유튜브 플레이리스트 추천 프로젝트</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
                 </li>
             </ul>
             <form class="d-flex">
-                <img onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=cb038f5f9a3ebddca7cc97a4d8f6d398&redirect_uri=http://localhost:8080/accountbook/kakao-login&response_type=code'" th:src="@{/img/img-btn-kakao.png}" style="height: 45px; margin-right: 10px">
+                <img onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=cb038f5f9a3ebddca7cc97a4d8f6d398&redirect_uri=http://localhost:8080/accountbook/kakao-login&response_type=code'" th:src="@{/img/img-btn-kakao.png}" style="cursor: pointer; height: 45px; margin-right: 10px">
                 <button type="button" class="btn btn-dark" th:onclick="|location.href='@{/sign-in}'|" style="height: 45px; padding: 0 10px 0 10px; font-size: 14px; font-weight: bold">이메일 회원가입/로그인</button>
 <!--                <input class="form-control me-sm-2" type="search" placeholder="Search">-->
 <!--                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>-->

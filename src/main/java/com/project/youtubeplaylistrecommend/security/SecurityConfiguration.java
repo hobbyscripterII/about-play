@@ -19,7 +19,7 @@ public class SecurityConfiguration {
                         .loginPage("/sign-in") // html 경로
                         .loginProcessingUrl("/sign-in") // url 호출 시 security가 낚아 챔 controller에 구현할 필요 x
                         .usernameParameter("email")
-                        .passwordParameter("upw")
+                        .passwordParameter("pwd")
                         .failureUrl("/sign-in?error") // 매핑 url, error param 생략 시 login 화면에 에러 메세지 출력 x
                         .defaultSuccessUrl("/") // 인증 완료 후 호출되는 url
                         .permitAll())
@@ -30,9 +30,9 @@ public class SecurityConfiguration {
                         .requestMatchers(
                                 "/", "/css/**", "/js/**", "/img/**", // resources
                                 "/error/**", "/access-denied?error", // error
-                                "/sign-in", "/sign-up", "/sign-out",
+                                "/sign-in", "/sign-up", "/sign-out", "/sign-up-success",
                                 "/name-check", "/email/**", // 회원가입 시 필요 url
-                                "/board/**"
+                                "/board/**", "/search/**"
                         ).permitAll()
                         // 외에는 ADMIN만 접근 o
                         .anyRequest().hasRole("ADMIN")

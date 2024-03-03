@@ -19,7 +19,7 @@ public class YoutubeController {
         return "/youtube-search-test";
     }
 
-    @GetMapping("/search-result/{keyword}")
+    @GetMapping("/search/{keyword}")
     public String search(@PathVariable String keyword, Model model) throws Exception {
         // 116번 이상 호출 시 일일 할당량 소진으로 에러 발생
         try {

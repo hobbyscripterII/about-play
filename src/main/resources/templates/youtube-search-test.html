@@ -5,7 +5,7 @@
       layout:decorate="~{layout/default-layout}"
       layout:fragment="main">
 <main>
-<h1>youtube search test page</h1>
+<h1>유튜브 검색(API 테스트용)</h1>
 <form id="form-search">
     <input type="text" class="form-control" id="input-keyword" placeholder="유튜브 검색어를 입력해보세요." autocomplete="off">
     <input type="button" class="btn btn-primary" id="btn-search" value="검색" onclick="search()">
@@ -42,7 +42,7 @@
             alert('검색어를 입력하지 않으셨습니다.');
         } else {
             console.log("keyword = ", keyword);
-            location.href = '/search-result/' + keyword;
+            location.href = '/search/' + keyword;
         }
     }
 </script>

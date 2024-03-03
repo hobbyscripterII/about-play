@@ -70,6 +70,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/sign-up-success")
+    public String signUpSuccess() {
+        return "/sign-up-success";
+    }
+
     @GetMapping("/name-check")
     @ResponseBody
     public int nameCheck(@RequestParam(name = "name") String name) {
