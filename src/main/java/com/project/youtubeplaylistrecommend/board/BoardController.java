@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+    private final BoardService boardService;
     private final GenreService genreService;
 
     @GetMapping
@@ -27,9 +28,8 @@ public class BoardController {
 
     @PostMapping("/write-playlist")
     @ResponseBody
-    public String insBoard(@RequestBody BoardPlaylistInsDto dto) {
-        log.info("dto = {}", dto);
-        return null;
+    public int insPlaylistBoard(@RequestBody BoardPlaylistInsDto dto) {
+        return boardService.insPlaylistBoard(dto);
     }
 
     @GetMapping("/write")
