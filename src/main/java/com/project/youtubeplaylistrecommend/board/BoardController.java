@@ -1,17 +1,15 @@
 package com.project.youtubeplaylistrecommend.board;
 
+import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistInsDto;
 import com.project.youtubeplaylistrecommend.common.BoardEnum;
 import com.project.youtubeplaylistrecommend.genre.GenreService;
-import com.project.youtubeplaylistrecommend.genre.model.GenreGetVo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -25,6 +23,13 @@ public class BoardController {
             return "/board/list-playlist";
         }
         return "/board/list";
+    }
+
+    @PostMapping("/write-playlist")
+    @ResponseBody
+    public String insBoard(@RequestBody BoardPlaylistInsDto dto) {
+        log.info("dto = {}", dto);
+        return null;
     }
 
     @GetMapping("/write")

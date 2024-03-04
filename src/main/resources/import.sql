@@ -10,4 +10,3 @@ INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`
 INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`, `last_updated_at`, `last_updated_user`, `genre_name`) VALUES ('2024-03-03 23:18:29.000000', 1, 8, NULL, NULL, 'EDM');
 INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`, `last_updated_at`, `last_updated_user`, `genre_name`) VALUES ('2024-03-03 23:18:29.000000', 1, 9, NULL, NULL, 'DJ MIX');
 INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`, `last_updated_at`, `last_updated_user`, `genre_name`) VALUES ('2024-03-03 23:18:29.000000', 1, 10, NULL, NULL, 'ETC');
-
