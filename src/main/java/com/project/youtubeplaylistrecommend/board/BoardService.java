@@ -24,7 +24,7 @@ public class BoardService {
     private final GenreRepository genreRepository;
 
     @Transactional
-    public int insPlaylistBoard(BoardPlaylistInsDto dto) {
+    public long insPlaylistBoard(BoardPlaylistInsDto dto) {
         try {
             long iuser = MyAuthentication.myUserDetails().getIuser();
             BoardEntity boardEntity = new BoardEntity();
@@ -36,19 +36,16 @@ public class BoardService {
             boardEntity.setBoardCodeEntity(boardCodeEntity);
             boardEntity.setTitle(dto.getTitle());
             boardRepository.save(boardEntity);
-            log.info("boardEntity = {}", boardEntity);
 
-            for (BoardPlaylistInsDto.PlaylistInsDto playlistInsDto : dto.getPlaylist()) {
+            for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
                 PlaylistEntity playlistEntity = new PlaylistEntity();
                 playlistEntity.setBoardEntity(boardEntity);
-                playlistEntity.setVideoId(playlistInsDto.getVideoId());
-                playlistEntity.setDescription(playlistInsDto.getDescription());
-                log.info("playlistEntity = {}", playlistEntity);
+                playlistEntity.setVideoId(list.getVideoId());
+                playlistEntity.setDescription(list.getDescription());
                 boardPlaylistRepository.save(playlistEntity);
             }
-            return SUCCESS;
+            return boardEntity.getIboard();
         } catch (Exception e) {
-            e.printStackTrace();
             return FAIL;
         }
     }

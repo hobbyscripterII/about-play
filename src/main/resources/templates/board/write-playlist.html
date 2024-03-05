@@ -64,10 +64,10 @@
 <script th:inline="javascript">
     const tablePlayListInsert = $(`#table-playlist-insert`);
     const videoUrl = $('#input-video-url');
+    const code = [[${param.code}]].toString();
     let videoId = null;
 
     function insert() {
-        const code = [[${param.code}]].toString();
         const genre = $(`#genre`).val();
         const title = $(`#title`).val();
         let playlist = [];
@@ -93,16 +93,15 @@
             data: JSON.stringify(dto),
             success: [
                 function (result) {
-                    // if (result === 2) {
-                    //     alert(`이미 가입된 이메일입니다. 다른 이메일을 입력해주세요.`);
-                    // } else if (result === 1) {
-                    //     alert(`이메일 확인 후 인증 코드를 입력해주세요.`);
-                    //     $('#tr-email-auth').css(`display`, `block`); // 이메일 인증 코드 폼 활성화
-                    //     email.data(`auth-btn-click-fl`, 1);
-                    //     console.log(`auth-btn-click-fl = `, email.data(`auth-btn-click-fl`));
-                    // } else {
-                    //     alert(`잠시 후 다시 시도해주세요.`);
-                    // }
+                    if (result === 0) {
+                        alert(`게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.`);
+                    } else {
+                        if(confirm(`게시글이 등록되었습니다. 확인하러 가시겠습니까?`)) {
+                            location.href = `/board/read-playlist/` + result;
+                        } else {
+                            location.href = `/board/list` + code;
+                        }
+                    }
                 }
             ]
         })

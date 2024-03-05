@@ -26,9 +26,15 @@ public class BoardController {
         return "/board/list";
     }
 
+    @GetMapping("/read-playlist/{iboard}")
+    public String selPlaylistBoard(@PathVariable long iboard) {
+
+        return null;
+    }
+
     @PostMapping("/write-playlist")
     @ResponseBody
-    public int insPlaylistBoard(@RequestBody BoardPlaylistInsDto dto) {
+    public long insPlaylistBoard(@RequestBody BoardPlaylistInsDto dto) {
         return boardService.insPlaylistBoard(dto);
     }
 

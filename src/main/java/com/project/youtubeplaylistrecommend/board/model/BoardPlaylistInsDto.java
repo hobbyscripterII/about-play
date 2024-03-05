@@ -9,10 +9,10 @@ public class BoardPlaylistInsDto {
     private long code;
     private long genre;
     private String title;
-    private List<PlaylistInsDto> playlist;
+    private List<Playlist> playlist;
 
     @Data
-    public static class PlaylistInsDto {
+    public static class Playlist {
         private String videoId;
         private String description;
     }
