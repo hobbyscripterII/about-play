@@ -23,11 +23,10 @@ public class BoardService {
     private final BoardCodeRepository boardCodeRepository;
     private final GenreRepository genreRepository;
 
-//    @Transactional
+    @Transactional
     public int insPlaylistBoard(BoardPlaylistInsDto dto) {
         try {
             long iuser = MyAuthentication.myUserDetails().getIuser();
-
             BoardEntity boardEntity = new BoardEntity();
             UserEntity userEntity = userRepository.getReferenceById(iuser);
             GenreCodeEntity genreCodeEntity = genreRepository.getReferenceById(dto.getGenre());
@@ -36,15 +35,15 @@ public class BoardService {
             boardEntity.setGenreCodeEntity(genreCodeEntity);
             boardEntity.setBoardCodeEntity(boardCodeEntity);
             boardEntity.setTitle(dto.getTitle());
-            boardEntity.setFirstCreatedUser(iuser); //
-            BoardEntity savedBoardEntity = boardRepository.save(boardEntity);
+            boardRepository.save(boardEntity);
+            log.info("boardEntity = {}", boardEntity);
 
             for (BoardPlaylistInsDto.PlaylistInsDto playlistInsDto : dto.getPlaylist()) {
                 PlaylistEntity playlistEntity = new PlaylistEntity();
-                boardRepository.getReferenceById(savedBoardEntity.getIboard());
+                playlistEntity.setBoardEntity(boardEntity);
                 playlistEntity.setVideoId(playlistInsDto.getVideoId());
                 playlistEntity.setDescription(playlistInsDto.getDescription());
-                playlistEntity.setFirstCreatedUser(iuser); //
+                log.info("playlistEntity = {}", playlistEntity);
                 boardPlaylistRepository.save(playlistEntity);
             }
             return SUCCESS;

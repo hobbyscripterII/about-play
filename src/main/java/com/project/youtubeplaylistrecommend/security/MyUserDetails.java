@@ -21,10 +21,6 @@ public class MyUserDetails implements UserDetails {
     private String nm;
     private String role;
 
-    public long getIuser() {
-        return iuser;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> list = new ArrayList<GrantedAuthority>();

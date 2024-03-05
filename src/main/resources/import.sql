@@ -10,3 +10,7 @@ INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`
 INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`, `last_updated_at`, `last_updated_user`, `genre_name`) VALUES ('2024-03-03 23:18:29.000000', 1, 8, NULL, NULL, 'EDM');
 INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`, `last_updated_at`, `last_updated_user`, `genre_name`) VALUES ('2024-03-03 23:18:29.000000', 1, 9, NULL, NULL, 'DJ MIX');
 INSERT INTO `genre_code_tbl` (`first_created_at`, `first_created_user`, `igenre`, `last_updated_at`, `last_updated_user`, `genre_name`) VALUES ('2024-03-03 23:18:29.000000', 1, 10, NULL, NULL, 'ETC');
+
+INSERT INTO `board_code_tbl` (`first_created_at`, `first_created_user`, `iboardcode`, `last_updated_at`, `last_updated_user`, `board_name`) VALUES	('2024-03-05 12:15:40.000000', 1, 1, NULL, NULL, '공지 게시판');
+INSERT INTO `board_code_tbl` (`first_created_at`, `first_created_user`, `iboardcode`, `last_updated_at`, `last_updated_user`, `board_name`) VALUES	('2024-03-05 12:15:40.000000', 1, 2, NULL, NULL, '플레이리스트 추천');
+INSERT INTO `board_code_tbl` (`first_created_at`, `first_created_user`, `iboardcode`, `last_updated_at`, `last_updated_user`, `board_name`) VALUES	('2024-03-05 12:15:40.000000', 1, 3, NULL, NULL, '자유 게시판');
