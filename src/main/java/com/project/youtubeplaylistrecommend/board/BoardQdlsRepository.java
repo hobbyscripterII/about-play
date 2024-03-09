@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BoardQdlsRepository {
     List<PlaylistEntity> getPlaylistBoard(Pageable pageable);
+    List<PlaylistEntity> selPlaylistBoard(long iboard);
 }

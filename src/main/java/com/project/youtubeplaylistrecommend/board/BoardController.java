@@ -1,6 +1,7 @@
 package com.project.youtubeplaylistrecommend.board;
 
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistInsDto;
+import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistSelVo;
 import com.project.youtubeplaylistrecommend.common.BoardEnum;
 import com.project.youtubeplaylistrecommend.genre.GenreService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -20,9 +23,9 @@ public class BoardController {
 
     @GetMapping
     public String getBoard(@RequestParam(name = "code") int code, Pageable pageable, Model model) {
+        model.addAttribute("code", code);
         model.addAttribute("title", getBoardName(code));
         if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
-            log.info("playlist = {}", boardService.getPlaylistBoard(pageable));
             model.addAttribute("playlist", boardService.getPlaylistBoard(pageable));
             return "/board/list-playlist";
         }
@@ -30,9 +33,12 @@ public class BoardController {
     }
 
     @GetMapping("/read-playlist/{iboard}")
-    public String selPlaylistBoard(@PathVariable long iboard) {
-
-        return null;
+    public String selPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable long iboard, Model model) {
+        model.addAttribute("code", code);
+        model.addAttribute("title", getBoardName(code));
+        model.addAttribute("board", boardService.selPlaylistBoard(iboard));
+        log.info("board = {}", boardService.selPlaylistBoard(iboard));
+        return "/board/read-playlist";
     }
 
     @PostMapping("/write-playlist")

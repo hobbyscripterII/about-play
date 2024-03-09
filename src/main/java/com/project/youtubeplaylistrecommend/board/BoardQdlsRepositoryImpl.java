@@ -28,4 +28,17 @@ public class BoardQdlsRepositoryImpl implements BoardQdlsRepository {
                 .where()
                 .fetch();
     }
+
+    @Override
+    public List<PlaylistEntity> selPlaylistBoard(long iboard) {
+        return jpaQueryFactory
+                .select(playlist)
+                .from(playlist)
+                .join(board)
+                .on(playlist.boardEntity.iboard.eq(board.iboard))
+                .join(user)
+                .on(board.userEntity.iuser.eq(user.iuser))
+                .where(playlist.boardEntity.iboard.eq(iboard))
+                .fetch();
+    }
 }

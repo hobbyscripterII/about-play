@@ -5,133 +5,41 @@
       layout:decorate="~{layout/default-layout}"
       layout:fragment="main">
 <main>
-    <h1>write page</h1>
-    <div class="modal" id="modal-insert-video">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">youtube link insert</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" class="form-control" id="input-video-url" placeholder="유튜브 링크를 붙여넣어주세요." th:onchange="">
-                    <div class="div-video">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-video-save" data-bs-dismiss="modal">save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1 th:text="${title}"></h1>
 
     <form class="form-search-result form-playlist-insert">
         <table class="table table-secondary" id="table-playlist-insert" style="width: 700px">
             <tbody>
             <tr>
                 <th scope="col" class="th-write-table">TITLE</th>
-                <th><input type="text" id="title" class="form-control" placeholder="제목을 입력하세요."></th>
+                <!-- 제목 -->
+                <th th:text="${board.title}"></th>
             </tr>
             <tr>
                 <th scope="col" class="th-write-table">GENRE</th>
-                <th>
-                    <select class="form-select" id="genre">
-                        <option value="null">장르를 선택해주세요.</option>
-                        <th:block th:each="g : ${genre}">
-                            <option th:value="${g.igenre}" th:text="${g.genreName}"></option>
-                        </th:block>
-                    </select>
+                <th th:text="${board.genre}">
                 </th>
             </tr>
-            <tr>
-                <th scope="col" class="th-write-table">PLAYLIST INSERT</th>
-                <th><button type="button" class="btn btn-light" id="btn-playlist-insert" style="width: 100%">PLAYLIST INSERT</button></th>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button type="button" class="btn btn-primary" onclick="insert()" style="width: 100%">등록</button>
-                </td>
-            </tr>
+
+            <th:block th:each="p : ${board.playlists}">
+                <tr>
+                    <th colspan="2" class="th-video">
+                        <object type="text/html" id="object-youtube" width="700px" height="400px" data=""></object>
+                        <script th:inline="javascript">
+                            const videoId = [[${p.videoId}]];
+                            const youtubeUrl = `https://www.youtube.com/embed/`;
+                            $('#object-youtube').attr(`data`, youtubeUrl + videoId);
+                        </script>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <textarea class="form-control textarea-video-description" th:text="${p.description}"></textarea>
+                    </th>
+                </tr>
+            </th:block>
             </tbody>
         </table>
     </form>
-
 </main>
-
-<script th:inline="javascript">
-    const tablePlayListInsert = $(`#table-playlist-insert`);
-    const videoUrl = $('#input-video-url');
-    const code = [[${param.code}]].toString();
-    let videoId = null;
-
-    function insert() {
-        const genre = $(`#genre`).val();
-        const title = $(`#title`).val();
-        let playlist = [];
-
-        tablePlayListInsert.each(function () {
-            const description = $(this).find(`.textarea-video-description`).val();
-            const videoId = $(this).find(`.textarea-video-description`).data(`video-id`);
-            playlist.push({"videoId": videoId, "description": description});
-        });
-
-        const dto = {
-            "code" : code,
-            "genre" : genre,
-            "title" : title,
-            "playlist" : playlist
-        };
-
-        $.ajax({
-            type: `post`,
-            url: `/board/write-playlist`,
-            contentType: `application/json`,
-            dataType: `json`,
-            data: JSON.stringify(dto),
-            success: [
-                function (result) {
-                    if (result === 0) {
-                        alert(`게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.`);
-                    } else {
-                        if(confirm(`게시글이 등록되었습니다. 확인하러 가시겠습니까?`)) {
-                            location.href = `/board/read-playlist/` + result;
-                        } else {
-                            location.href = `/board/list` + code;
-                        }
-                    }
-                }
-            ]
-        })
-    }
-
-    $('#btn-playlist-insert').click(function () {
-        const row = $(`tbody`).find(`tr`).last();
-        const row1 = '<tr><th scope="col" class="th-write-table">PLAYLIST LINK INSERT</th><th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">PLAYLIST LINK INSERT</button></th></tr>';
-        const row2 = '<tr><th colspan="2" class="th-video"></th></tr>';
-        const row3 = '<tr><th colspan="2"><textarea class="form-control textarea-video-description" data-video-id="" placeholder="플레이리스트에 대한 설명을 입력해주세요."></textarea></th></tr>';
-        row.before(row1, row2, row3); // `등록` 버튼 바로 앞에 행 삽입
-    });
-
-    // url 입력 시 video 출력
-    videoUrl.change(function() {
-        const match = videoUrl.val().match(/[?&]v=([^?&]+)/);
-
-        if(match && match[1]) {
-            videoId = match[1];
-            $('.div-video').html('<object type="text/html" width="465px" height="300px" data="https://www.youtube.com/embed/'+ videoId +'"></object>');
-        } else {
-            $('.div-video').html('<p>해당 video를 불러올 수 없습니다. 링크 확인 후 다시 시도해주세요.</p>');
-        }
-    });
-
-    $('.btn-video-save').click(function () {
-        alert('동영상이 저장되었습니다.');
-        // last() - 마지막 요소만 변경
-        $('.th-video').last().html('<object type="text/html" width="700px" height="400px" data="https://www.youtube.com/embed/' + videoId + '"></object>');
-        $(`.textarea-video-description`).data(`video-id`, videoId);
-    });
-</script>
 </html>

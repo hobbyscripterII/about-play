@@ -2,6 +2,7 @@ package com.project.youtubeplaylistrecommend.board;
 
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistGetVo;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistInsDto;
+import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistSelVo;
 import com.project.youtubeplaylistrecommend.entity.*;
 import com.project.youtubeplaylistrecommend.genre.GenreRepository;
 import com.project.youtubeplaylistrecommend.security.MyAuthentication;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.project.youtubeplaylistrecommend.common.Const.FAIL;
 
@@ -72,6 +75,38 @@ public class BoardService {
                     .toList();
         } catch (Exception e) {
             // 추후 수정
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Transactional
+    public BoardPlaylistSelVo selPlaylistBoard(long iboard) {
+        Optional<BoardEntity> allById = boardRepository.findById(iboard);
+
+        try {
+            if (allById.isPresent()) {
+                BoardEntity boardEntity = allById.get();
+                return BoardPlaylistSelVo
+                        .builder()
+                        .iboard(boardEntity.getIboard())
+                        .title(boardEntity.getTitle())
+                        .createdAt(boardEntity.getFirstCreatedAt())
+                        .nm(boardEntity.getUserEntity().getName())
+                        .genre(boardEntity.getGenreCodeEntity().getGenreName())
+                        .playlists(boardRepository.selPlaylistBoard(iboard)
+                                .stream()
+                                .map(item -> BoardPlaylistSelVo.Playlist
+                                        .builder()
+                                        .videoId(item.getVideoId())
+                                        .description(item.getDescription())
+                                        .build())
+                                .toList())
+                        .build();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
