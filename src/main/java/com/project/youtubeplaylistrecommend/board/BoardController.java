@@ -5,6 +5,7 @@ import com.project.youtubeplaylistrecommend.common.BoardEnum;
 import com.project.youtubeplaylistrecommend.genre.GenreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,11 @@ public class BoardController {
     private final GenreService genreService;
 
     @GetMapping
-    public String getBoard(@RequestParam(name = "code") int code, Model model) {
+    public String getBoard(@RequestParam(name = "code") int code, Pageable pageable, Model model) {
         model.addAttribute("title", getBoardName(code));
         if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
+            log.info("playlist = {}", boardService.getPlaylistBoard(pageable));
+            model.addAttribute("playlist", boardService.getPlaylistBoard(pageable));
             return "/board/list-playlist";
         }
         return "/board/list";

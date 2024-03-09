@@ -10,133 +10,168 @@
     <h1 th:text="${title}"></h1>
 
     <div class="div-playlist-wrap">
-        <div class="card bg-dark mb-3 div-playlist-card">
-            <div class="card-header">
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">제목: </span>
-                        <span class="span-playlist-body">봉길에게 감기는 플리🐠</span>
+        <th:block th:each="p : ${playlist}" th:if="${playlist != null}">
+            <div class="card bg-dark mb-3 div-playlist-card">
+                <div class="card-header">
+                    <div class="div-playlist-row-wrap">
+                        <div>
+                            <span class="span-playlist-header">제목: </span>
+                            <span class="span-playlist-body" th:text="${p.title}"></span>
+                        </div>
+                        <div>
+                            <span class="span-playlist-header" th:text="${p.createdAt}"></span>
+                        </div>
                     </div>
-                    <div>
-                        <span class="span-playlist-header">2024-03-03</span>
+                    <div class="div-playlist-row-wrap">
+                        <div>
+                            <span class="span-playlist-header">작성자: </span>
+                            <span class="span-playlist-body" th:text="${p.name}"></span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>
+                            <span class="span-playlist-body" th:text="${p.view}"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>
+                            <span class="span-playlist-body" th:text="${p.heart}"></span>
+                        </div>
                     </div>
                 </div>
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">작성자: </span>
-                        <span class="span-playlist-body">관리자</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>
-                        <span class="span-playlist-body">0</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>
-                        <span class="span-playlist-body">0</span>
-                    </div>
+                <div class="card-body">
+                    <img class="img-playlist-thumbnail" th:src="'http://img.youtube.com/vi/' + ${p.videoId} +'/hqdefault.jpg'">
+                </div>
+                <div class="card-footer text-muted span-playlist-footer" th:text="${p.description}">
                 </div>
             </div>
-            <div class="card-body">
-                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/2atXpzIDdGY/hqdefault.jpg">
-            </div>
-            <div class="card-footer text-muted span-playlist-footer">
-                파묘 보셨다면 봉길에게 한번 더 감겨보세요.
-            </div>
-        </div>
+        </th:block>
 
-        <div class="card bg-dark mb-3 div-playlist-card">
-            <div class="card-header">
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">제목: </span>
-                        <span class="span-playlist-body">일본 감성 하우스 플리🎧</span>
-                    </div>
-                    <div>
-                        <span class="span-playlist-header">2024-03-03</span>
-                    </div>
-                </div>
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">작성자: </span>
-                        <span class="span-playlist-body">관리자</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>
-                        <span class="span-playlist-body">0</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>
-                        <span class="span-playlist-body">0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/PYfhbYIxBxE/hqdefault.jpg">
-            </div>
-            <div class="card-footer text-muted span-playlist-footer">
-                일본은 안가봤지만 일본 신주쿠 쪽 클럽가면 나올 것만 같은..🙄
-            </div>
-        </div>
 
-        <div class="card bg-dark mb-3 div-playlist-card">
-            <div class="card-header">
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">제목: </span>
-                        <span class="span-playlist-body">오렌지가 생각나는 하우스 플리🍊</span>
-                    </div>
-                    <div>
-                        <span class="span-playlist-header">2024-03-03</span>
-                    </div>
-                </div>
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">작성자: </span>
-                        <span class="span-playlist-body">관리자</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>
-                        <span class="span-playlist-body">0</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>
-                        <span class="span-playlist-body">0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/dihIHLhr2J4/hqdefault.jpg">
-            </div>
-            <div class="card-footer text-muted span-playlist-footer">
-                출근길, 등굣길에 듣기좋은 플리인 것 같아서 올려요.
-            </div>
-        </div>
+        <!-- >>>>> -->
+<!--        <div class="card bg-dark mb-3 div-playlist-card">-->
+<!--            <div class="card-header">-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">제목: </span>-->
+<!--                        <span class="span-playlist-body">봉길에게 감기는 플리🐠</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">2024-03-03</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">작성자: </span>-->
+<!--                        <span class="span-playlist-body">관리자</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/2atXpzIDdGY/hqdefault.jpg">-->
+<!--            </div>-->
+<!--            <div class="card-footer text-muted span-playlist-footer">-->
+<!--                파묘 보셨다면 봉길에게 한번 더 감겨보세요.-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="card bg-dark mb-3 div-playlist-card">
-            <div class="card-header">
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">제목: </span>
-                        <span class="span-playlist-body">쌀쌀한 날엔 잔나비가 최고!</span>
-                    </div>
-                    <div>
-                        <span class="span-playlist-header">2024-03-03</span>
-                    </div>
-                </div>
-                <div class="div-playlist-row-wrap">
-                    <div>
-                        <span class="span-playlist-header">작성자: </span>
-                        <span class="span-playlist-body">관리자</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>
-                        <span class="span-playlist-body">0</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>
-                        <span class="span-playlist-body">0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/dcKuU3t_DVk/hqdefault.jpg">
-            </div>
-            <div class="card-footer text-muted span-playlist-footer">
-                잔나비 플리는 이거 하나면 돼요!
-            </div>
-        </div>
+<!--        <div class="card bg-dark mb-3 div-playlist-card">-->
+<!--            <div class="card-header">-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">제목: </span>-->
+<!--                        <span class="span-playlist-body">일본 감성 하우스 플리🎧</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">2024-03-03</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">작성자: </span>-->
+<!--                        <span class="span-playlist-body">관리자</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/PYfhbYIxBxE/hqdefault.jpg">-->
+<!--            </div>-->
+<!--            <div class="card-footer text-muted span-playlist-footer">-->
+<!--                일본은 안가봤지만 일본 신주쿠 쪽 클럽가면 나올 것만 같은..🙄-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="card bg-dark mb-3 div-playlist-card">-->
+<!--            <div class="card-header">-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">제목: </span>-->
+<!--                        <span class="span-playlist-body">오렌지가 생각나는 하우스 플리🍊</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">2024-03-03</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">작성자: </span>-->
+<!--                        <span class="span-playlist-body">관리자</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/dihIHLhr2J4/hqdefault.jpg">-->
+<!--            </div>-->
+<!--            <div class="card-footer text-muted span-playlist-footer">-->
+<!--                출근길, 등굣길에 듣기좋은 플리인 것 같아서 올려요.-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="card bg-dark mb-3 div-playlist-card">-->
+<!--            <div class="card-header">-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">제목: </span>-->
+<!--                        <span class="span-playlist-body">쌀쌀한 날엔 잔나비가 최고!</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">2024-03-03</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="div-playlist-row-wrap">-->
+<!--                    <div>-->
+<!--                        <span class="span-playlist-header">작성자: </span>-->
+<!--                        <span class="span-playlist-body">관리자</span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>-->
+<!--                        <span class="span-playlist-body">0</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="card-body">-->
+<!--                <img class="img-playlist-thumbnail" src="http://img.youtube.com/vi/dcKuU3t_DVk/hqdefault.jpg">-->
+<!--            </div>-->
+<!--            <div class="card-footer text-muted span-playlist-footer">-->
+<!--                잔나비 플리는 이거 하나면 돼요!-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 
     <div class="div-btn-group-wrap">

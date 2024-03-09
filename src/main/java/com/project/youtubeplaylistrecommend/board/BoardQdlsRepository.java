@@ -1,10 +1,10 @@
 package com.project.youtubeplaylistrecommend.board;
 
-import com.project.youtubeplaylistrecommend.entity.BoardEntity;
+import com.project.youtubeplaylistrecommend.entity.PlaylistEntity;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface BoardQdlsRepository {
-    List<BoardEntity> getPlaylistBoard(Pageable pageable);
+    List<PlaylistEntity> getPlaylistBoard(Pageable pageable);
 }

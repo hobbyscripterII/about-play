@@ -1,9 +1,6 @@
 package com.project.youtubeplaylistrecommend.board;
 
-import com.project.youtubeplaylistrecommend.entity.BoardEntity;
-import com.project.youtubeplaylistrecommend.entity.QBoardEntity;
-import com.project.youtubeplaylistrecommend.entity.QPlaylistEntity;
-import com.project.youtubeplaylistrecommend.entity.QUserEntity;
+import com.project.youtubeplaylistrecommend.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +17,12 @@ public class BoardQdlsRepositoryImpl implements BoardQdlsRepository {
     private final QPlaylistEntity playlist = new QPlaylistEntity("playlist");
 
     @Override
-    public List<BoardEntity> getPlaylistBoard(Pageable pageable) {
+    public List<PlaylistEntity> getPlaylistBoard(Pageable pageable) {
         return jpaQueryFactory
-                .select(board)
-                .from(board)
-                .join(playlist)
-                .on(board.iboard.eq(playlist.boardEntity.iboard))
+                .select(playlist)
+                .from(playlist)
+                .join(board)
+                .on(playlist.boardEntity.iboard.eq(board.iboard))
                 .join(user)
                 .on(board.userEntity.iuser.eq(user.iuser))
                 .where()
