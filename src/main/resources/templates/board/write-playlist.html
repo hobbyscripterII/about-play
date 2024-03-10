@@ -81,6 +81,8 @@
             }
         });
 
+        console.log(`playlist = `, playlist);
+
         const dto = {
             "code" : code,
             "genre" : genre,
@@ -100,7 +102,7 @@
                         alert(`게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.`);
                     } else {
                         if(confirm(`게시글이 등록되었습니다. 확인하러 가시겠습니까?`)) {
-                            location.href = `/board/read-playlist/` + result;
+                            location.href = `/board/read-playlist/` + result + `code=` + code;
                         } else {
                             location.href = `/board?code=` + code;
                         }
@@ -134,7 +136,7 @@
         alert('동영상이 저장되었습니다.');
         // last() - 마지막 요소만 변경
         $('.th-video').last().html('<object type="text/html" width="700px" height="400px" data="https://www.youtube.com/embed/' + videoId + '"></object>');
-        $(`.textarea-video-description`).data(`video-id`, videoId);
+        $(`.textarea-video-description`).last().data(`video-id`, videoId);
     });
 </script>
 </html>

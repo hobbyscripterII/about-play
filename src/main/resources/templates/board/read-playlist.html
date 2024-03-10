@@ -7,7 +7,7 @@
 <main>
     <h1 th:text="${title}"></h1>
 
-    <form class="form-search-result form-playlist-insert">
+    <form class="form-playlist-insert">
         <table class="table table-secondary" id="table-playlist-insert" style="width: 700px">
             <tbody>
             <tr>
@@ -27,16 +27,10 @@
                 <th th:text="${board.genre}">
                 </th>
             </tr>
-
             <th:block th:each="p : ${board.playlists}">
                 <tr>
                     <th colspan="2" class="th-video">
-                        <object type="text/html" id="object-youtube" width="700px" height="400px" data=""></object>
-                        <script th:inline="javascript">
-                            const videoId = [[${p.videoId}]];
-                            const youtubeUrl = `https://www.youtube.com/embed/`;
-                            $('#object-youtube').attr(`data`, youtubeUrl + videoId);
-                        </script>
+                        <object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object>
                     </th>
                 </tr>
                 <tr>
@@ -45,10 +39,16 @@
                     </th>
                 </tr>
             </th:block>
+            <tr>
+                <th colspan="2">
+                    <div class="div-btn-group-wrap">
+                        <button type="button" class="btn btn-danger" onclick="delBoard()">삭제</button>
+                    </div>
+                </th>
+            </tr>
             </tbody>
         </table>
     </form>
-    <button type="button" class="btn btn-danger" onclick="delBoard()">삭제</button>
 </main>
 
 <script th:inline="javascript">

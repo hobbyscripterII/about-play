@@ -132,3 +132,9 @@ table, .table {
     text-align: center;
     line-height: 38px;
 }
+
+.form-playlist-insert {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
