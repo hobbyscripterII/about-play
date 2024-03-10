@@ -25,6 +25,7 @@ public class BoardController {
     public String getBoard(@RequestParam(name = "code") int code, Pageable pageable, Model model) {
         model.addAttribute("code", code);
         model.addAttribute("title", getBoardName(code));
+
         if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
             model.addAttribute("playlist", boardService.getPlaylistBoard(pageable));
             return "/board/list-playlist";
@@ -37,31 +38,40 @@ public class BoardController {
         model.addAttribute("code", code);
         model.addAttribute("title", getBoardName(code));
         model.addAttribute("board", boardService.selPlaylistBoard(iboard));
-        log.info("board = {}", boardService.selPlaylistBoard(iboard));
         return "/board/read-playlist";
+    }
+
+    @GetMapping("/update-playlist/{iboard}")
+    public String updPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable long iboard, Model model) {
+        model.addAttribute("code", code);
+        model.addAttribute("title", getBoardName(code));
+        model.addAttribute("genre", genreService.getGenre());
+        model.addAttribute("dto", boardService.selPlaylistBoard(iboard));
+        return "/board/write-playlist";
+    }
+
+    @GetMapping("/write-playlist")
+    public String insPlaylistBoard(@RequestParam(name = "code") int code, Model model) {
+        if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
+            model.addAttribute("code", code);
+            model.addAttribute("title", getBoardName(code));
+            model.addAttribute("genre", genreService.getGenre());
+            model.addAttribute("dto", new BoardPlaylistInsDto());
+            log.info("dto = {}", new BoardPlaylistInsDto());
+            return "/board/write-playlist";
+        }
+        return "/home"; // 추후 수정
     }
 
     @PostMapping("/write-playlist")
     @ResponseBody
     public long insPlaylistBoard(@RequestBody BoardPlaylistInsDto dto) {
-        log.info("dto = {}", dto);
         return boardService.insPlaylistBoard(dto);
-    }
-
-    @GetMapping("/write")
-    public String insBoard(@RequestParam(name = "code") int code, Model model) {
-        if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
-            model.addAttribute("code", code);
-            model.addAttribute("genre", genreService.getGenre());
-            return "/board/write-playlist";
-        }
-        return "/home";
     }
 
     @DeleteMapping("{iboard}")
     @ResponseBody
     public int delBoard(@PathVariable(name = "iboard") int iboard) {
-        log.info("iboard = {}", iboard);
         return boardService.delBoard(iboard);
     }
 

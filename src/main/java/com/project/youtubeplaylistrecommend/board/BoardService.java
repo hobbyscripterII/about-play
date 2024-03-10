@@ -3,7 +3,6 @@ package com.project.youtubeplaylistrecommend.board;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistGetVo;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistInsDto;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistSelVo;
-import com.project.youtubeplaylistrecommend.common.Const;
 import com.project.youtubeplaylistrecommend.entity.*;
 import com.project.youtubeplaylistrecommend.genre.GenreRepository;
 import com.project.youtubeplaylistrecommend.playlist.PlaylistRepository;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,14 +45,11 @@ public class BoardService {
             boardRepository.save(boardEntity);
 
             for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
-                log.info("videoId = {}", list.getVideoId());
                 PlaylistEntity playlistEntity = new PlaylistEntity();
                 playlistEntity.setBoardEntity(boardEntity);
                 playlistEntity.setVideoId(list.getVideoId());
                 playlistEntity.setDescription(list.getDescription());
-                log.info("playlistEntity = {}", playlistEntity);
                 playlistRepository.save(playlistEntity);
-                // playlist 마지막 하나만 등록됨 - 수정 요망
             }
             return boardEntity.getIboard();
         } catch (Exception e) {
@@ -114,11 +109,12 @@ public class BoardService {
                 return BoardPlaylistSelVo
                         .builder()
                         .iboard(boardEntity.getIboard())
+                        .iuser(boardEntity.getUserEntity().getIuser())
                         .title(boardEntity.getTitle())
                         .createdAt(boardEntity.getFirstCreatedAt())
                         .nm(boardEntity.getUserEntity().getName())
                         .genre(boardEntity.getGenreCodeEntity().getGenreName())
-                        .playlists(boardRepository.selPlaylistBoard(iboard)
+                        .playlist(boardRepository.selPlaylistBoard(iboard)
                                 .stream()
                                 .map(item -> BoardPlaylistSelVo.Playlist
                                         .builder()

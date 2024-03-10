@@ -2,13 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/default-layout}"
       layout:fragment="main">
 <main>
     <h1 th:text="${title}"></h1>
 
     <form class="form-playlist-insert">
-        <table class="table table-secondary" id="table-playlist-insert" style="width: 700px">
+        <table class="table" id="table-playlist-insert" style="width: 700px">
             <tbody>
             <tr>
                 <th scope="col">TITLE</th>
@@ -27,7 +28,7 @@
                 <th th:text="${board.genre}">
                 </th>
             </tr>
-            <th:block th:each="p : ${board.playlists}">
+            <th:block th:each="p : ${board.playlist}">
                 <tr>
                     <th colspan="2" class="th-video">
                         <object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object>
@@ -42,7 +43,11 @@
             <tr>
                 <th colspan="2">
                     <div class="div-btn-group-wrap">
-                        <button type="button" class="btn btn-danger" onclick="delBoard()">삭제</button>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <button th:if="${#authentication.principal.iuser eq board.iuser}" type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/update-playlist/}${board.iboard}?code=${code}'|" style="margin-right: 10px">수정</button>
+                            <button th:if="${#authentication.principal.iuser eq board.iuser}" type="button" class="btn btn-danger" onclick="delBoard()" style="margin-right: 10px">삭제</button>
+                        </th:block>
+                            <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/board(code=${param.code})}'|">목록</button>
                     </div>
                 </th>
             </tr>

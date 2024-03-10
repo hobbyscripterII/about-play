@@ -5,12 +5,12 @@
       layout:decorate="~{layout/default-layout}"
       layout:fragment="main">
 <main>
-    <h1>write page</h1>
+    <h1 th:text="${title}"></h1>
     <div class="modal" id="modal-insert-video">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">youtube link insert</h5>
+                    <h5 class="modal-title">유튜브 플레이리스트 링크 추가</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"></span>
                     </button>
@@ -21,25 +21,26 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-video-save" data-bs-dismiss="modal">save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                    <button type="button" class="btn btn-primary btn-video-save" data-bs-dismiss="modal">저장</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <form class="form-search-result form-playlist-insert">
+    <form th:object="${dto}" class="form-search-result form-playlist-insert">
         <table class="table table-secondary" id="table-playlist-insert" style="width: 700px">
             <tbody>
             <tr>
-                <th scope="col" class="th-write-table">TITLE</th>
-                <th><input type="text" id="title" class="form-control" placeholder="제목을 입력하세요."></th>
+                <th scope="col" class="th-write-table">제목</th>
+                <th><input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요."></th>
             </tr>
             <tr>
-                <th scope="col" class="th-write-table">GENRE</th>
+                <th scope="col" class="th-write-table">장르</th>
                 <th>
                     <select class="form-select" id="genre">
-                        <option value="null">장르를 선택해주세요.</option>
+                        <option th:if="*{genre != 0}" th:text="*{genre}">장르를 선택해주세요.</option>
+                        <option th:if="*{genre == 0}" value="null">장르를 선택해주세요.</option>
                         <th:block th:each="g : ${genre}">
                             <option th:value="${g.igenre}" th:text="${g.genreName}"></option>
                         </th:block>
@@ -47,9 +48,22 @@
                 </th>
             </tr>
             <tr>
-                <th scope="col" class="th-write-table">PLAYLIST INSERT</th>
-                <th><button type="button" class="btn btn-light" id="btn-playlist-insert" style="width: 100%">PLAYLIST INSERT</button></th>
+                <th colspan="2" scope="col"><button type="button" class="btn btn-light" id="btn-playlist-insert" style="width: 100%">유튜브 플레이리스트 추가</button></th>
             </tr>
+            <th:block th:if="${dto != null}">
+                <th:block th:if="${#lists.size(dto.playlist) != 0}" th:each="p : ${dto.playlist}">
+                    <tr>
+                        <th colspan="2" class="th-video">
+                            <object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <textarea class="form-control textarea-video-description" th:text="${p.description}"></textarea>
+                        </th>
+                    </tr>
+                </th:block>
+            </th:block>
             <tr>
                 <td colspan="2">
                     <button type="button" class="btn btn-primary" onclick="insBoard()" style="width: 100%">등록</button>
@@ -72,49 +86,53 @@
         const title = $(`#title`).val();
         let playlist = [];
 
-        tablePlayListInsert.find(`tr`).each(function () {
-            const description = $(this).find(`.textarea-video-description`).val();
-            const videoId = $(this).find(`.textarea-video-description`).data(`video-id`);
+        if (!title) {
+            alert(`제목을 입력해주세요.`);
+        } else if(!genre) {
+            alert(`장르를 선택해주세요.`);
+        } else {
+            tablePlayListInsert.find(`tr`).each(function () {
+                const description = $(this).find(`.textarea-video-description`).val();
+                const videoId = $(this).find(`.textarea-video-description`).data(`video-id`);
 
-            if(description != null && videoId != null) {
-                playlist.push({"videoId": videoId, "description": description});
-            }
-        });
+                if(description != null && videoId != null) {
+                    playlist.push({"videoId": videoId, "description": description});
+                }
+            });
 
-        console.log(`playlist = `, playlist);
+            const dto = {
+                "code" : code,
+                "genre" : genre,
+                "title" : title,
+                "playlist" : playlist
+            };
 
-        const dto = {
-            "code" : code,
-            "genre" : genre,
-            "title" : title,
-            "playlist" : playlist
-        };
-
-        $.ajax({
-            type: `post`,
-            url: `/board/write-playlist`,
-            contentType: `application/json`,
-            dataType: `json`,
-            data: JSON.stringify(dto),
-            success: [
-                function (result) {
-                    if (result === 0) {
-                        alert(`게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.`);
-                    } else {
-                        if(confirm(`게시글이 등록되었습니다. 확인하러 가시겠습니까?`)) {
-                            location.href = `/board/read-playlist/` + result + `code=` + code;
+            $.ajax({
+                type: `post`,
+                url: `/board/write-playlist`,
+                contentType: `application/json`,
+                dataType: `json`,
+                data: JSON.stringify(dto),
+                success: [
+                    function (result) {
+                        if (result === 0) {
+                            alert(`게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.`);
                         } else {
-                            location.href = `/board?code=` + code;
+                            if(confirm(`게시글이 등록되었습니다. 확인하러 가시겠습니까?`)) {
+                                location.href = `/board/read-playlist/` + result + `?code=` + code;
+                            } else {
+                                location.href = `/board?code=` + code;
+                            }
                         }
                     }
-                }
-            ]
-        })
+                ]
+            })
+        }
     }
 
     $('#btn-playlist-insert').click(function () {
         const row = $(`tbody`).find(`tr`).last();
-        const row1 = '<tr><th scope="col" class="th-write-table">PLAYLIST LINK INSERT</th><th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">PLAYLIST LINK INSERT</button></th></tr>';
+        const row1 = '<tr><th colspan="2" scope="col"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-video" style="width: 100%">유튜브 플레이리스트 링크 추가</button></th></tr>';
         const row2 = '<tr><th colspan="2" class="th-video"></th></tr>';
         const row3 = '<tr><th colspan="2"><textarea class="form-control textarea-video-description" data-video-id="" placeholder="플레이리스트에 대한 설명을 입력해주세요."></textarea></th></tr>';
         row.before(row1, row2, row3); // `등록` 버튼 바로 앞에 행 삽입
