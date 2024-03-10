@@ -44,6 +44,8 @@ public class QBoardEntity extends EntityPathBase<BoardEntity> {
     //inherited
     public final NumberPath<Long> lastUpdatedUser = _super.lastUpdatedUser;
 
+    public final ListPath<PlaylistEntity, QPlaylistEntity> playlistEntity = this.<PlaylistEntity, QPlaylistEntity>createList("playlistEntity", PlaylistEntity.class, QPlaylistEntity.class, PathInits.DIRECT2);
+
     public final StringPath title = createString("title");
 
     public final QUserEntity userEntity;

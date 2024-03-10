@@ -3,8 +3,10 @@ package com.project.youtubeplaylistrecommend.board;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistGetVo;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistInsDto;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistSelVo;
+import com.project.youtubeplaylistrecommend.common.Const;
 import com.project.youtubeplaylistrecommend.entity.*;
 import com.project.youtubeplaylistrecommend.genre.GenreRepository;
+import com.project.youtubeplaylistrecommend.playlist.PlaylistRepository;
 import com.project.youtubeplaylistrecommend.security.MyAuthentication;
 import com.project.youtubeplaylistrecommend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.youtubeplaylistrecommend.common.Const.FAIL;
+import static com.project.youtubeplaylistrecommend.common.Const.SUCCESS;
 
 @Slf4j
 @Service
@@ -25,7 +28,7 @@ import static com.project.youtubeplaylistrecommend.common.Const.FAIL;
 public class BoardService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
-    private final BoardPlaylistRepository boardPlaylistRepository;
+    private final PlaylistRepository playlistRepository;
     private final BoardCodeRepository boardCodeRepository;
     private final GenreRepository genreRepository;
 
@@ -44,14 +47,35 @@ public class BoardService {
             boardRepository.save(boardEntity);
 
             for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
+                log.info("videoId = {}", list.getVideoId());
                 PlaylistEntity playlistEntity = new PlaylistEntity();
                 playlistEntity.setBoardEntity(boardEntity);
                 playlistEntity.setVideoId(list.getVideoId());
                 playlistEntity.setDescription(list.getDescription());
-                boardPlaylistRepository.save(playlistEntity);
+                log.info("playlistEntity = {}", playlistEntity);
+                playlistRepository.save(playlistEntity);
+                // playlist 마지막 하나만 등록됨 - 수정 요망
             }
             return boardEntity.getIboard();
         } catch (Exception e) {
+            return FAIL;
+        }
+    }
+
+    @Transactional
+    public int delBoard(int iboard) {
+        try {
+            Optional<BoardEntity> optionalBoardEntity = boardRepository.findById((long) iboard);
+            if (optionalBoardEntity.isPresent()) {
+                BoardEntity boardEntity = optionalBoardEntity.get();
+                playlistRepository.deleteByIboard(iboard);
+                boardRepository.delete((boardEntity));
+                return SUCCESS;
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return FAIL;
         }
     }

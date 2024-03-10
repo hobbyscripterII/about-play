@@ -19,7 +19,7 @@
                             <span class="span-playlist-body" th:text="${p.title}"></span>
                         </div>
                         <div>
-                            <span class="span-playlist-header" th:text="${p.createdAt}"></span>
+                            <span class="span-playlist-header" th:text="${#temporals.format(p.createdAt, 'yyyy년 MM월 dd일')}"></span>
                         </div>
                     </div>
                     <div class="div-playlist-row-wrap">

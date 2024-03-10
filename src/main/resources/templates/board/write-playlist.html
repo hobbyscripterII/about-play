@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="button" class="btn btn-primary" onclick="insert()" style="width: 100%">등록</button>
+                    <button type="button" class="btn btn-primary" onclick="insBoard()" style="width: 100%">등록</button>
                 </td>
             </tr>
             </tbody>
@@ -67,15 +67,18 @@
     const code = [[${param.code}]].toString();
     let videoId = null;
 
-    function insert() {
+    function insBoard() {
         const genre = $(`#genre`).val();
         const title = $(`#title`).val();
         let playlist = [];
 
-        tablePlayListInsert.each(function () {
+        tablePlayListInsert.find(`tr`).each(function () {
             const description = $(this).find(`.textarea-video-description`).val();
             const videoId = $(this).find(`.textarea-video-description`).data(`video-id`);
-            playlist.push({"videoId": videoId, "description": description});
+
+            if(description != null && videoId != null) {
+                playlist.push({"videoId": videoId, "description": description});
+            }
         });
 
         const dto = {
@@ -99,7 +102,7 @@
                         if(confirm(`게시글이 등록되었습니다. 확인하러 가시겠습니까?`)) {
                             location.href = `/board/read-playlist/` + result;
                         } else {
-                            location.href = `/board/list` + code;
+                            location.href = `/board?code=` + code;
                         }
                     }
                 }

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "board_tbl")
@@ -35,4 +38,7 @@ public class BoardEntity extends BaseEntity {
     @Column(columnDefinition = "INT UNSIGNED", nullable = false)
     @ColumnDefault("'0'")
     private int view;
+
+    @OneToMany(mappedBy = "iplaylist", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<PlaylistEntity> playlistEntity = new ArrayList<>();
 }

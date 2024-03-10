@@ -25,6 +25,7 @@ public class BoardQdlsRepositoryImpl implements BoardQdlsRepository {
                 .on(playlist.boardEntity.iboard.eq(board.iboard))
                 .join(user)
                 .on(board.userEntity.iuser.eq(user.iuser))
+                .groupBy(playlist.boardEntity.iboard)
                 .where()
                 .fetch();
     }

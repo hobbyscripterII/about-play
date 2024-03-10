@@ -44,6 +44,7 @@ public class BoardController {
     @PostMapping("/write-playlist")
     @ResponseBody
     public long insPlaylistBoard(@RequestBody BoardPlaylistInsDto dto) {
+        log.info("dto = {}", dto);
         return boardService.insPlaylistBoard(dto);
     }
 
@@ -55,6 +56,13 @@ public class BoardController {
             return "/board/write-playlist";
         }
         return "/home";
+    }
+
+    @DeleteMapping("{iboard}")
+    @ResponseBody
+    public int delBoard(@PathVariable(name = "iboard") int iboard) {
+        log.info("iboard = {}", iboard);
+        return boardService.delBoard(iboard);
     }
 
     private String getBoardName(int code) {

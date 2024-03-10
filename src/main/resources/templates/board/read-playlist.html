@@ -11,12 +11,19 @@
         <table class="table table-secondary" id="table-playlist-insert" style="width: 700px">
             <tbody>
             <tr>
-                <th scope="col" class="th-write-table">TITLE</th>
-                <!-- 제목 -->
+                <th scope="col">TITLE</th>
                 <th th:text="${board.title}"></th>
             </tr>
             <tr>
-                <th scope="col" class="th-write-table">GENRE</th>
+                <th scope="col">DATE</th>
+                <th th:text="${#temporals.format(board.createdAt, 'yyyy년 MM월 dd일')}"></th>
+            </tr>
+            <tr>
+                <th scope="col">BY</th>
+                <th th:text="${board.nm}"></th>
+            </tr>
+            <tr>
+                <th scope="col">GENRE</th>
                 <th th:text="${board.genre}">
                 </th>
             </tr>
@@ -34,12 +41,39 @@
                 </tr>
                 <tr>
                     <th colspan="2">
-                        <textarea class="form-control textarea-video-description" th:text="${p.description}"></textarea>
+                        <textarea class="form-control textarea-video-description" th:text="${p.description}" disabled></textarea>
                     </th>
                 </tr>
             </th:block>
             </tbody>
         </table>
     </form>
+    <button type="button" class="btn btn-danger" onclick="delBoard()">삭제</button>
 </main>
+
+<script th:inline="javascript">
+    const code = [[${param.code}]].toString();
+    const iboard = [[${board.iboard}]];
+
+    function delBoard() {
+        if (confirm(`삭제된 글은 복구할 수 없습니다. 정말로 삭제하시겠습니까?`)) {
+            $.ajax({
+                type: `delete`,
+                url: `/board/` + iboard,
+                success: [
+                    function (result) {
+                        if (result === 1) {
+                            alert(`게시글이 삭제되었습니다.`);
+                            location.href = `/board?code=` + code;
+                        } else {
+                            alert(`게시글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.`);
+                        }
+                    }
+                ]
+            })
+        } else {
+            alert(`게시글 삭제가 취소되었습니다.`);
+        }
+    }
+</script>
 </html>
