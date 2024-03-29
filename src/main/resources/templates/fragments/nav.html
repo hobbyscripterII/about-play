@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:fragment="nav">
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/}">ABOUT PLAY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,24 +26,25 @@
                     <a class="nav-link" th:href="@{/search}">유튜브 검색(API 테스트용)</a>
                 </li>
 
-                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자 페이지</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/admin">홈</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </li>
-                </th:block>
+                <!-- 관리자 페이지 추후 작업 -->
+<!--                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">-->
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자 페이지</a>-->
+<!--                        <div class="dropdown-menu">-->
+<!--                            <a class="dropdown-item" href="/admin">홈</a>-->
+<!--                            <a class="dropdown-item" href="#">Another action</a>-->
+<!--                            <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                            <div class="dropdown-divider"></div>-->
+<!--                            <a class="dropdown-item" href="#">Separated link</a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </th:block>-->
             </ul>
             <form class="d-flex">
                 <img onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=cb038f5f9a3ebddca7cc97a4d8f6d398&redirect_uri=http://localhost:8080/accountbook/kakao-login&response_type=code'" th:src="@{/img/img-btn-kakao.png}" style="cursor: pointer; height: 45px; margin-right: 10px">
 
                 <th:block sec:authorize="isAnonymous()">
-                    <button type="button" class="btn btn-dark btn-nav" th:onclick="|location.href='@{/sign-in}'|">이메일 회원가입/로그인</button>
+                    <button type="button" class="btn btn-success btn-nav" th:onclick="|location.href='@{/sign-in}'|">이메일 회원가입/로그인</button>
                 </th:block>
 
                 <th:block sec:authorize="isAuthenticated()">

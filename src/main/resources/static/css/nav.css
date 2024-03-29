@@ -71,9 +71,9 @@ nav {
     height: 100%;
     text-align: center;
     font-size: 40px;
-    color: black;
     font-weight: bold;
     line-height: 200px;
+    color: white;
 }
 
 .btn-nav {
