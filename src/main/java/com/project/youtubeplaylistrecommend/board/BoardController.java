@@ -21,10 +21,19 @@ public class BoardController {
     private final BoardService boardService;
     private final GenreService genreService;
 
-    @GetMapping
-    public String getBoard(@RequestParam(name = "code") int code, Pageable pageable, Model model) {
+    private void getTitleAndGenre(int code, Model model) {
+        getTitle(code, model);
+        model.addAttribute("genre", genreService.getGenre());
+    }
+
+    private void getTitle(int code, Model model) {
         model.addAttribute("code", code);
         model.addAttribute("title", getBoardName(code));
+    }
+
+    @GetMapping
+    public String getBoard(@RequestParam(name = "code") int code, Pageable pageable, Model model) {
+        getTitle(code, model);
 
         if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
             model.addAttribute("playlist", boardService.getPlaylistBoard(pageable));
@@ -35,17 +44,14 @@ public class BoardController {
 
     @GetMapping("/read-playlist/{iboard}")
     public String selPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable long iboard, Model model) {
-        model.addAttribute("code", code);
-        model.addAttribute("title", getBoardName(code));
+        getTitle(code, model);
         model.addAttribute("board", boardService.selPlaylistBoard(iboard));
         return "/board/read-playlist";
     }
 
     @GetMapping("/update-playlist/{iboard}")
     public String updPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable long iboard, Model model) {
-        model.addAttribute("code", code);
-        model.addAttribute("title", getBoardName(code));
-        model.addAttribute("genre", genreService.getGenre());
+        getTitleAndGenre(code, model);
         model.addAttribute("dto", boardService.selPlaylistBoard(iboard));
         return "/board/write-playlist";
     }
@@ -53,11 +59,8 @@ public class BoardController {
     @GetMapping("/write-playlist")
     public String insPlaylistBoard(@RequestParam(name = "code") int code, Model model) {
         if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
-            model.addAttribute("code", code);
-            model.addAttribute("title", getBoardName(code));
-            model.addAttribute("genre", genreService.getGenre());
+            getTitleAndGenre(code, model);
             model.addAttribute("dto", new BoardPlaylistInsDto());
-            log.info("dto = {}", new BoardPlaylistInsDto());
             return "/board/write-playlist";
         }
         return "/home"; // 추후 수정
