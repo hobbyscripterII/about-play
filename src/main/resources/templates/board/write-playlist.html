@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default-layout}"
-      layout:fragment="main">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default-layout}" layout:fragment="main">
 <main>
     <h1 th:text="${title}"></h1>
     <div class="modal" id="modal-insert-video">
@@ -11,14 +7,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">유튜브 플레이리스트 링크 추가</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
                 </div>
                 <div class="modal-body">
                     <input type="text" class="form-control" id="input-video-url" placeholder="유튜브 링크를 붙여넣어주세요." th:onchange="">
-                    <div class="div-video">
-                    </div>
+                    <div class="div-video"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="btn-video-save" data-bs-dismiss="modal">저장</button>
@@ -31,19 +24,14 @@
     <form th:object="${dto}" class="form-search-result form-playlist-insert">
         <table class="table table-secondary" id="table-playlist-insert" style="width: 700px">
             <tbody>
-            <tr>
-                <th scope="col" class="th-write-table">제목</th>
-                <th colspan="2"><input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요."></th>
-            </tr>
+            <tr><th scope="col" class="th-write-table">제목</th><th colspan="2"><input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요."></th></tr>
             <tr>
                 <th scope="col" class="th-write-table">장르</th>
                 <th colspan="2">
                     <select class="form-select" id="genre">
                         <option th:if="*{genre != 0}" th:text="*{genre}">장르를 선택해주세요.</option>
                         <option th:if="*{genre == 0}" value="null">장르를 선택해주세요.</option>
-                        <th:block th:each="g : ${genre}">
-                            <option th:value="${g.igenre}" th:text="${g.genreName}"></option>
-                        </th:block>
+                        <th:block th:each="g : ${genre}"><option th:value="${g.igenre}" th:text="${g.genreName}"></option></th:block>
                     </select>
                 </th>
             </tr>
@@ -54,87 +42,65 @@
             <!-- ===================================================================================== -->
             <th:block th:if="${dto != null}">
                 <th:block th:if="${#lists.size(dto.playlist) != 0}" th:each="p : ${dto.playlist}">
-                    <tr>
-                        <th colspan="3" class="th-video">
-                            <object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="3">
-                            <textarea class="form-control textarea-video-description" th:text="${p.description}"></textarea>
-                        </th>
-                    </tr>
+                    <tr><th colspan="3" class="th-video"><object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object></th></tr>
+                    <tr><th colspan="3"><textarea class="form-control textarea-video-description" th:text="${p.description}"></textarea></th></tr>
                 </th:block>
             </th:block>
-            <tr>
-                <td colspan="3">
-                    <button type="button" class="btn btn-primary" onclick="insBoard()" style="width: 100%">등록</button>
-                </td>
-            </tr>
+            <tr><td colspan="3"><button type="button" class="btn btn-primary" onclick="insBoard()" style="width: 100%">등록</button></td></tr>
             </tbody>
         </table>
     </form>
-
 </main>
 
 <script th:inline="javascript">
-    const tablePlayListInsert = $(`#table-playlist-insert`);
+    const tablePlayListInsert = $('#table-playlist-insert');
     const videoUrl = $('#input-video-url');
     const code = [[${param.code}]].toString();
     let playlist = [];
 
-    function insBoard() {
-        const genre = $(`#genre`).val();
-        const title = $(`#title`).val();
+    document.addEventListener('click', function(e) {
+        if(e.target.id == 'btn-modal-insert-video') { insertVideo(e); }
 
-        if (!title) {
-            alert('제목을 입력해주세요.');
-        } else if(!genre) {
-            alert('장르를 선택해주세요.');
-        } else {
-            tablePlayListInsert.find('tr').each(function (idx) {
-                console.log('idx = ', idx);
-                const videoId = $(this).find('.textarea-video-description').data('video-id');
-                const description = $(this).find('.textarea-video-description').val();
-
-                console.log('videoId = ', videoId);
-                console.log('description = ', description);
-
-                if(description !== undefined && videoId !== undefined) {
-                    playlist.push({"videoId": videoId, "description": description});
-                }
-            });
-
-                console.log('playlist = ', playlist);
-
-            const dto = {
-                "code" : code,
-                "genre" : genre,
-                "title" : title,
-                "playlist" : playlist
-            };
-
-            $.ajax({
-                type: `post`,
-                url: `/board/write-playlist`,
-                contentType: `application/json`,
-                dataType: `json`,
-                data: JSON.stringify(dto),
-                success: [
-                    function (result) {
-                        if (result === 0) {
-                            alert(`게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.`);
-                        } else {
-                            if(confirm(`게시글이 등록되었습니다. 확인하러 가시겠습니까?`)) {
-                                location.href = `/board/read-playlist/` + result + `?code=` + code;
-                            } else {
-                                location.href = `/board?code=` + code;
-                            }
-                        }
-                    }
-                ]
-            })
+        if(e.target.id == 'btn-video-del') {
+            if(confirm('삭제된 링크는 복구할 수 없습니다. 삭제하시겠습니까?')) {
+                const targetNode = e.target.parentNode.parentNode; const targetNode2 = targetNode.nextSibling.nextSibling; const targetNode3 = targetNode.previousSibling; const targetNodeParent = targetNode.parentNode;
+                targetNodeParent.removeChild(targetNode); targetNodeParent.removeChild(targetNode2); targetNodeParent.removeChild(targetNode3); }
+            else { alert('삭제가 취소되었습니다.'); }
         }
+
+        if(e.target.className == 'btn-close' || e.target.className == 'btn btn-secondary modal-close') { modalClose(); }
+    })
+
+    function insertVideo(e) {
+        const videoIdArr = [];
+        modalOpen();
+
+        document.getElementById('input-video-url').addEventListener('change', function() {
+            const divVideo = document.querySelector('.div-video');
+            const match = videoUrl.val().match(/[?&]v=([^?&]+)/);
+
+            if(match && match[1]) {
+                videoIdArr.push(match[1]);
+                const videoId = videoIdArr[videoIdArr.length - 1];
+                divVideo.innerHTML = `<object type="text/html" width="465px" height="300px" data="https://www.youtube.com/embed/${videoId}"></object>`;
+            } else {  $('.div-video').html('<p>해당 video를 불러올 수 없습니다. 링크 확인 후 다시 시도해주세요.</p>'); }
+        });
+
+        document.getElementById('btn-video-save').addEventListener('click', function () {
+            const target = e.target.closest('tr');
+            // const videoId = videoIdArr[videoIdArr.length - 1];
+            // target.innerHTML = `<th colspan="3"><object class="object-video" type="text/html" width="700px" height="400px" data="https://www.youtube.com/embed/${videoId}"></object></th>`;
+
+            // ===============================================================================================================================================================================
+            const videoId = videoIdArr[videoIdArr.length - 1];
+            const newTr = document.createElement('tr');
+            newTr.innerHTML = `<th colspan="3"><object class="object-video" type="text/html" width="700px" height="400px" data="https://www.youtube.com/embed/${videoId}"></object></th>`;
+            target.before(newTr);
+
+            const descriptionEl = target.nextSibling.nextSibling.firstChild.firstChild;
+            const setVideoId = descriptionEl.dataset.videoId = `${videoId}`;
+            modalClose();
+        });
     }
 
     $('#btn-playlist-insert').click(function () {
@@ -144,67 +110,35 @@
         row.before(row1, row2); // `등록` 버튼 바로 앞에 행 삽입
     });
 
-    function insertVideo(e) {
-        const videoIdArr = [];
+    function insBoard() {
+        const genre = $('#genre').val();
+        const title = $('#title').val();
 
-        if(e.target.id == 'btn-modal-insert-video') {
-            modalOpen();
-
-            document.getElementById('input-video-url').addEventListener('change', function() {
-                const divVideo = document.querySelector('.div-video');
-                const match = videoUrl.val().match(/[?&]v=([^?&]+)/);
-
-                if(match && match[1]) {
-                    videoIdArr.push(match[1]);
-                    const videoId = videoIdArr[videoIdArr.length - 1];
-                    divVideo.innerHTML = `<object type="text/html" width="465px" height="300px" data="https://www.youtube.com/embed/${videoId}"></object>`;
-                } else {
-                    $('.div-video').html('<p>해당 video를 불러올 수 없습니다. 링크 확인 후 다시 시도해주세요.</p>');
-                }
+        if (!title) { alert('제목을 입력해주세요.');}
+        else if(!genre) { alert('장르를 선택해주세요.');}
+        else {
+            tablePlayListInsert.find('tr').each(function () {
+                const videoId = $(this).find('.textarea-video-description').data('video-id');
+                const description = $(this).find('.textarea-video-description').val();
+                if(description !== undefined && videoId !== undefined) { playlist.push({ "videoId": videoId, "description": description });}
             });
 
-            document.getElementById('btn-video-save').addEventListener('click', function () {
-                const target = e.target.closest('tr');
-                const videoId = videoIdArr[videoIdArr.length - 1];
-                target.innerHTML = `<th colspan="3"><object class="object-video" type="text/html" width="700px" height="400px" data="https://www.youtube.com/embed/${videoId}"></object></th>`;
-                const test = target.nextSibling.nextSibling;
-                console.log('test = ', test);
-                const test2 = test.firstChild.firstChild;
-                console.log('test2 = ', test2);
-                const test3 = test2.dataset.videoId = `${videoId}`;
-                console.log('test3 = ', test3);
-                modalClose();
-            });
-        }
-    }
+            const dto = { "code" : code, "genre" : genre, "title" : title, "playlist" : playlist };
 
-    document.addEventListener('click', function(e) {
-        insertVideo(e);
+            $.ajax({
+                type: 'post',
+                url: '/board/write-playlist',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(dto),
+                success: [
+                    function (result) {
+                        if (result === 0) { alert('게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.'); }
+                        else { if(confirm('게시글이 등록되었습니다. 확인하러 가시겠습니까?')) { location.href = `/board/read-playlist/${result}?code=${code}`; } else { location.href = `/board?code=${code}`; }}}
+                ]})
+        }}
 
-        if(e.target.id == 'btn-video-del') {
-            if(confirm('삭제된 링크는 복구할 수 없습니다. 삭제하시겠습니까?')) {
-                const targetNode = e.target.parentNode.parentNode;
-                const targetNode2 = targetNode.nextSibling.nextSibling;
-                const targetNodeParent = targetNode.parentNode;
-
-                targetNodeParent.removeChild(targetNode);
-                targetNodeParent.removeChild(targetNode2);
-            } else {
-                alert('삭제가 취소되었습니다.');
-            }
-        }
-
-        if(e.target.className == 'btn-close' || e.target.className == 'btn btn-secondary modal-close') {
-            modalClose();
-        }
-    })
-
-    function modalOpen() {
-        document.getElementById('modal-insert-video').style.display = 'block';
-    }
-
-    function modalClose() {
-        document.getElementById('modal-insert-video').style.display = 'none';
-    }
+    function modalOpen() { document.getElementById('modal-insert-video').style.display = 'block'; }
+    function modalClose() { document.getElementById('modal-insert-video').style.display = 'none'; }
 </script>
 </html>
