@@ -43,7 +43,7 @@ public class BoardController {
     }
 
     @GetMapping("/read-playlist/{iboard}")
-    public String selPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable long iboard, Model model) {
+    public String selPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable(name = "iboard") long iboard, Model model) {
         getTitle(code, model);
         model.addAttribute("board", boardService.selPlaylistBoard(iboard));
         return "/board/read-playlist";

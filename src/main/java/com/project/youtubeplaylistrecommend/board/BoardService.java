@@ -32,8 +32,6 @@ public class BoardService {
 
     @Transactional
     public long insPlaylistBoard(BoardPlaylistInsDto dto) {
-        log.info("dto = {}", dto);
-
         try {
             long iuser = MyAuthentication.myUserDetails().getIuser();
             BoardEntity boardEntity = new BoardEntity();
@@ -51,9 +49,6 @@ public class BoardService {
                 playlistEntity.setBoardEntity(boardEntity);
                 playlistEntity.setVideoId(list.getVideoId());
                 playlistEntity.setDescription(list.getDescription());
-
-                log.info("playlistEntity = {}", playlistEntity);
-
                 playlistRepository.save(playlistEntity);
             }
             return boardEntity.getIboard();

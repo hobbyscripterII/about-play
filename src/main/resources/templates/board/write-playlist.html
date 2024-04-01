@@ -53,12 +53,12 @@
 </main>
 
 <script th:inline="javascript">
-    const tablePlayListInsert = $('#table-playlist-insert');
+    const tablePlaylistInsert = $('#table-playlist-insert');
     const videoUrl = $('#input-video-url');
     const code = [[${param.code}]].toString();
     let playlist = [];
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', (e) => {
         if(e.target.id == 'btn-modal-insert-video') { insertVideo(e); }
 
         if(e.target.id == 'btn-video-del') {
@@ -75,7 +75,7 @@
         const videoIdArr = [];
         modalOpen();
 
-        document.getElementById('input-video-url').addEventListener('change', function() {
+        document.getElementById('input-video-url').addEventListener('change', () => {
             const divVideo = document.querySelector('.div-video');
             const match = videoUrl.val().match(/[?&]v=([^?&]+)/);
 
@@ -88,7 +88,7 @@
             }
         });
 
-        document.getElementById('btn-video-save').addEventListener('click', function () {
+        document.getElementById('btn-video-save').addEventListener('click', () => {
             const videoId = videoIdArr[videoIdArr.length - 1];
             const target = e.target.closest('tr');
             const newTr = document.createElement('tr');
@@ -101,7 +101,7 @@
         }, { once : true });
     }
 
-    $('#btn-playlist-insert').click(function () {
+    $('#btn-playlist-insert').click(() => {
         const row = $(`tbody`).find(`tr`).last();
         const row1 = '<tr><th scope="col"><button type="button" class="btn btn-primary" id="btn-modal-insert-video" style="width: 100%">링크 추가</button></th><th scope="col"><button type="button" class="btn btn-warning" style="width: 100%">링크 수정</button></th><th scope="col"><button type="button" class="btn btn-danger" id="btn-video-del" style="width: 100%">링크 삭제</button></th></tr> ';
         const row2 = '<tr><th colspan="3"><textarea class="form-control textarea-video-description" data-video-id="" placeholder="플레이리스트에 대한 설명을 입력해주세요."></textarea></th></tr>';
@@ -115,7 +115,7 @@
         if (!title) { alert('제목을 입력해주세요.');}
         else if(!genre) { alert('장르를 선택해주세요.');}
         else {
-                tablePlayListInsert.find('tr').each(function () {
+                tablePlaylistInsert.find('tr').each(function () {
                 const videoId = $(this).find('.textarea-video-description').data('video-id');
                 const description = $(this).find('.textarea-video-description').val();
                 if(description !== undefined && videoId !== undefined) { playlist.push({ "videoId": videoId, "description": description });}
