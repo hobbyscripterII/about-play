@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class BoardPlaylistInsDto {
+    private long iboard;
     private long code;
     private long genre;
     private String title;
@@ -13,6 +14,7 @@ public class BoardPlaylistInsDto {
 
     @Data
     public static class Playlist {
+        private long iplaylist;
         private String videoId;
         private String description;
     }

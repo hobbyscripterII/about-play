@@ -3,6 +3,7 @@ package com.project.youtubeplaylistrecommend.board;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistGetVo;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistInsDto;
 import com.project.youtubeplaylistrecommend.board.model.BoardPlaylistSelVo;
+import com.project.youtubeplaylistrecommend.common.Utils;
 import com.project.youtubeplaylistrecommend.entity.*;
 import com.project.youtubeplaylistrecommend.genre.GenreRepository;
 import com.project.youtubeplaylistrecommend.playlist.PlaylistRepository;
@@ -11,6 +12,7 @@ import com.project.youtubeplaylistrecommend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,26 +36,47 @@ public class BoardService {
     public long insPlaylistBoard(BoardPlaylistInsDto dto) {
         try {
             long iuser = MyAuthentication.myUserDetails().getIuser();
-            BoardEntity boardEntity = new BoardEntity();
-            UserEntity userEntity = userRepository.getReferenceById(iuser);
-            GenreCodeEntity genreCodeEntity = genreRepository.getReferenceById(dto.getGenre());
-            BoardCodeEntity boardCodeEntity = boardCodeRepository.getReferenceById(dto.getCode());
-            boardEntity.setUserEntity(userEntity);
-            boardEntity.setGenreCodeEntity(genreCodeEntity);
-            boardEntity.setBoardCodeEntity(boardCodeEntity);
-            boardEntity.setTitle(dto.getTitle());
-            boardRepository.save(boardEntity);
+            long iboard = dto.getIboard();
 
-            for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
-                PlaylistEntity playlistEntity = new PlaylistEntity();
-                playlistEntity.setBoardEntity(boardEntity);
-                playlistEntity.setVideoId(list.getVideoId());
-                playlistEntity.setDescription(list.getDescription());
-                playlistRepository.save(playlistEntity);
+            if (Utils.isNotNull(iboard)) {
+                boardRepository.findById(iboard)
+                        .ifPresent((boardEntity) -> {
+                            UserEntity userEntity = userRepository.getReferenceById(boardEntity.getUserEntity().getIuser());
+                            GenreCodeEntity genreCodeEntity = genreRepository.getReferenceById(boardEntity.getGenreCodeEntity().getIgenre());
+                            BoardCodeEntity boardCodeEntity = boardCodeRepository.getReferenceById(boardEntity.getBoardCodeEntity().getIboardcode());
+                            insPlaylistBoard(dto, boardEntity, userEntity, genreCodeEntity, boardCodeEntity);
+                        });
+            } else {
+                BoardEntity boardEntity = new BoardEntity();
+                UserEntity userEntity = userRepository.getReferenceById(iuser);
+                GenreCodeEntity genreCodeEntity = genreRepository.getReferenceById(dto.getGenre());
+                BoardCodeEntity boardCodeEntity = boardCodeRepository.getReferenceById(dto.getCode());
+                insPlaylistBoard(dto, boardEntity, userEntity, genreCodeEntity, boardCodeEntity);
+                iboard = boardEntity.getIboard();
             }
-            return boardEntity.getIboard();
-        } catch (Exception e) {
-            return FAIL;
+            return iboard;
+        }
+        catch (Exception e) { return FAIL; }
+    }
+
+    private void insPlaylistBoard(BoardPlaylistInsDto dto, BoardEntity boardEntity, UserEntity userEntity, GenreCodeEntity genreCodeEntity, BoardCodeEntity boardCodeEntity) {
+        boardEntity.setUserEntity(userEntity);
+        boardEntity.setGenreCodeEntity(genreCodeEntity);
+        boardEntity.setBoardCodeEntity(boardCodeEntity);
+        boardEntity.setTitle(dto.getTitle());
+        boardRepository.save(boardEntity);
+
+        for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
+            Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
+            PlaylistEntity playlistEntity;
+
+            if(optionalPlaylistEntity.isPresent()) { playlistEntity = optionalPlaylistEntity.get(); }
+            else { playlistEntity = new PlaylistEntity(); }
+
+            playlistEntity.setBoardEntity(boardEntity);
+            playlistEntity.setVideoId(list.getVideoId());
+            playlistEntity.setDescription(list.getDescription());
+            playlistRepository.save(playlistEntity);
         }
     }
 
@@ -68,11 +91,8 @@ public class BoardService {
                 return SUCCESS;
             } else {
                 throw new Exception();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return FAIL;
-        }
+            }}
+        catch (Exception e) { e.printStackTrace(); return FAIL; }
     }
 
     @Transactional
@@ -94,8 +114,7 @@ public class BoardService {
                     .toList();
         } catch (Exception e) {
             // 추후 수정
-            e.printStackTrace();
-            return null;
+            e.printStackTrace(); return null;
         }
     }
 
@@ -109,6 +128,7 @@ public class BoardService {
                 return BoardPlaylistSelVo
                         .builder()
                         .iboard(boardEntity.getIboard())
+                        .igenre(boardEntity.getGenreCodeEntity().getIgenre())
                         .iuser(boardEntity.getUserEntity().getIuser())
                         .title(boardEntity.getTitle())
                         .createdAt(boardEntity.getFirstCreatedAt())
@@ -118,17 +138,13 @@ public class BoardService {
                                 .stream()
                                 .map(item -> BoardPlaylistSelVo.Playlist
                                         .builder()
+                                        .iplaylist(item.getIplaylist())
                                         .videoId(item.getVideoId())
                                         .description(item.getDescription())
                                         .build())
                                 .toList())
-                        .build();
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+                        .build(); }
+            else { return null; }
+        } catch (Exception e) { e.printStackTrace(); return null; }
     }
 }

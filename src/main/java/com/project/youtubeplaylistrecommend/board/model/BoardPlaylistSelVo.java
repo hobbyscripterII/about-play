@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardPlaylistSelVo { // 게시글 읽기, 수정 공용
     private long iboard;
+    private long igenre;
     private long iuser;
     private String title;
     private LocalDateTime createdAt;
@@ -23,6 +24,7 @@ public class BoardPlaylistSelVo { // 게시글 읽기, 수정 공용
     @Builder
     @AllArgsConstructor
     public static class Playlist {
+        private long iplaylist;
         private String videoId;
         private String description;
     }

@@ -5,18 +5,9 @@
     <div class="modal" id="modal-insert-video">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">유튜브 플레이리스트 링크 추가</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" class="form-control input-video-url" id="input-video-url" placeholder="유튜브 링크를 붙여넣어주세요." th:onchange="">
-                    <div class="div-video"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btn-video-save" data-bs-dismiss="modal">저장</button>
-                    <button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">닫기</button>
-                </div>
+                <div class="modal-header"><h5 class="modal-title">유튜브 플레이리스트 링크 추가</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button></div>
+                <div class="modal-body"><input type="text" class="form-control input-video-url" id="input-video-url" placeholder="유튜브 링크를 붙여넣어주세요." th:onchange=""><div class="div-video"></div></div>
+                <div class="modal-footer"><button type="button" class="btn btn-primary" id="btn-video-save" data-bs-dismiss="modal">저장</button><button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">닫기</button></div>
             </div>
         </div>
     </div>
@@ -28,8 +19,8 @@
             <tr>
                 <th scope="col" class="th-write-table">장르</th>
                 <th colspan="2">
-                    <select class="form-select" id="genre">
-                        <option th:if="*{genre != 0}" th:text="*{genre}">장르를 선택해주세요.</option>
+                    <select class="form-select" id="genre" th:data-iboard="*{iboard}">
+                        <option th:if="*{genre != 0}" th:value="*{igenre}" th:text="*{genre}">장르를 선택해주세요.</option>
                         <option th:if="*{genre == 0}" value="null">장르를 선택해주세요.</option>
                         <th:block th:each="g : ${genre}"><option th:value="${g.igenre}" th:text="${g.genreName}"></option></th:block>
                     </select>
@@ -38,14 +29,14 @@
             <tr><th colspan="3" scope="col"><button type="button" class="btn btn-light" id="btn-playlist-insert" style="width: 100%">유튜브 플레이리스트 추가</button></th></tr>
             <th:block th:if="${#lists.isEmpty(dto.playlist)}">
                 <tr></tr>
-                <tr><th scope="col"><button type="button" class="btn btn-primary" id="btn-modal-insert-video" style="width: 100%">링크 추가</button></th><th scope="col"><button type="button" class="btn btn-warning" style="width: 100%">링크 수정</button></th><th scope="col"><button type="button" class="btn btn-danger" id="btn-video-del" style="width: 100%">링크 삭제</button></th></tr>
+                <tr><th scope="col"><button type="button" class="btn btn-primary btn-modal-insert-video" style="width: 100%">링크 추가</button></th><th scope="col"><button type="button" class="btn btn-warning btn-modal-update-video" style="width: 100%">링크 수정</button></th><th scope="col"><button type="button" class="btn btn-danger" id="btn-video-del" style="width: 100%">링크 삭제</button></th></tr>
                 <tr><th colspan="3"><textarea class="form-control textarea-video-description" data-video-id="" placeholder="플레이리스트에 대한 설명을 입력해주세요."></textarea></th></tr>
             </th:block>
             <!-- ===================================================================================== -->
             <th:block th:if="${!#lists.isEmpty(dto.playlist)}" th:each="p : ${dto.playlist}">
                 <tr><th colspan="3" class="th-video"><object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object></th></tr>
-                <tr><th scope="col"><button type="button" class="btn btn-primary" id="btn-modal-insert-video" style="width: 100%" disabled>링크 추가</button></th><th scope="col"><button type="button" class="btn btn-warning" style="width: 100%">링크 수정</button></th><th scope="col"><button type="button" class="btn btn-danger" id="btn-video-del" style="width: 100%">링크 삭제</button></th></tr>
-                <tr><th colspan="3"><textarea class="form-control textarea-video-description" th:text="${p.description}"></textarea></th></tr>
+                <tr><th scope="col"><button type="button" class="btn btn-primary btn-modal-insert-video" style="width: 100%" disabled>링크 추가</button></th><th scope="col"><button type="button" class="btn btn-warning btn-modal-update-video" style="width: 100%">링크 수정</button></th><th scope="col"><button type="button" class="btn btn-danger" id="btn-video-del" style="width: 100%">링크 삭제</button></th></tr>
+                <tr><th colspan="3"><textarea class="form-control textarea-video-description" th:data-video-id="${p.videoId}" th:data-iplaylist="${p.iplaylist}" th:text="${p.description}"></textarea></th></tr>
             </th:block>
             <tr><td colspan="3"><button type="button" class="btn btn-primary" onclick="insertBoard()" style="width: 100%">등록</button></td></tr>
             </tbody>
@@ -60,12 +51,13 @@
     let playlist = [];
 
     document.addEventListener('click', (e) => {
-        if(e.target.id == 'btn-modal-insert-video') { insertVideo(e); }
+        if(e.target.className == 'btn btn-primary btn-modal-insert-video') { insertVideo(e); }
+        if(e.target.className == 'btn btn-warning btn-modal-update-video') { insertVideo(e); }
 
         if(e.target.id == 'btn-video-del') {
             if(confirm('삭제된 링크는 복구할 수 없습니다. 삭제하시겠습니까?')) {
                 const targetNode = e.target.parentNode.parentNode; const targetNode2 = targetNode.nextSibling.nextSibling; const targetNode3 = targetNode.previousSibling.previousSibling; const targetNodeParent = targetNode.parentNode;
-                // console.log('targetNode = ', targetNode); console.log('targetNode2 = ', targetNode2); console.log('targetNode3 = ', targetNode3); console.log('targetNodeParent= ', targetNodeParent);
+                // console.log(`targetNode = ${targetNode}, targetNode2 = ${targetNode2}, targetNode3 = ${targetNode3}, targetNodeParent = ${targetNodeParent}`);
                 targetNodeParent.removeChild(targetNode); targetNodeParent.removeChild(targetNode2); targetNodeParent.removeChild(targetNode3);
             }
             else { alert('삭제가 취소되었습니다.'); }
@@ -108,29 +100,33 @@
     }
 
     $('#btn-playlist-insert').click(() => {
-        const row = $(`tbody`).find(`tr`).last();
+        const row = $('tbody').find('tr').last();
         const row1 = '<tr></tr> ';
-        const row2 = '<tr><th scope="col"><button type="button" class="btn btn-primary" id="btn-modal-insert-video" style="width: 100%">링크 추가</button></th><th scope="col"><button type="button" class="btn btn-warning" style="width: 100%">링크 수정</button></th><th scope="col"><button type="button" class="btn btn-danger" id="btn-video-del" style="width: 100%">링크 삭제</button></th></tr> ';
+        const row2 = '<tr><th scope="col"><button type="button" class="btn btn-primary btn-modal-insert-video" style="width: 100%">링크 추가</button></th><th scope="col"><button type="button" class="btn btn-warning  btn-modal-update-video" style="width: 100%">링크 수정</button></th><th scope="col"><button type="button" class="btn btn-danger" id="btn-video-del" style="width: 100%">링크 삭제</button></th></tr> ';
         const row3 = '<tr><th colspan="3"><textarea class="form-control textarea-video-description" data-video-id="" placeholder="플레이리스트에 대한 설명을 입력해주세요."></textarea></th></tr>';
         row.before(row1, row2, row3); // `등록` 버튼 바로 앞에 행 삽입
     });
 
     function insertBoard() {
-        const title = document.getElementById('title'); const genre = document.getElementById('genre');
+        const title = document.getElementById('title'); const genre = document.getElementById('genre'); const iboard = genre.dataset.iboard;
+        console.log(`title = ${title.value}, genre = ${genre.value}, iboard = ${iboard}`);
 
         if (!title.value) { alert('제목을 입력해주세요.'); }
         else if(genre.value === 'null') { alert('장르를 선택해주세요.'); }
         else {
-            tablePlaylistInsert.find('tr').each(function () {
-                const videoId = $(this).find('.textarea-video-description').data('video-id');
-                const description = $(this).find('.textarea-video-description').val();
+            tablePlaylistInsert.find('tr').each(function (idx) {
+                const target = $(this).find('.textarea-video-description');
+                const videoId = target.data('video-id');
+                const description = target.val();
+                const iplaylist = target.data('iplaylist');
+                // console.log(`idx = ${idx}, videoId = ${videoId}, description = ${description}, iplaylist = ${iplaylist}`);
                 // video id, description이 빈문자열 && undefined가 아닐 때만 playlist 배열에 추가
-                if(description !== '' && videoId !== '' && description !== undefined && videoId !== undefined) { playlist.push({ "videoId": videoId, "description": description });}
+                if(description !== '' && videoId !== '' && description !== undefined && videoId !== undefined) { playlist.push({ "videoId": videoId, "description": description, "iplaylist" : iplaylist });}
             });
 
             if(playlist.length == 0) { alert('플레이리스트를 추가하거나 설명을 입력해주세요.'); return false; }
 
-            const dto = { "code" : code, "genre" : genre.value, "title" : title.value, "playlist" : playlist };
+            const dto = { "code" : code, "iboard" : iboard, "genre" : genre.value, "title" : title.value, "playlist" : playlist };
 
             $.ajax({
                 type: 'post', url: '/board/write-playlist', contentType: 'application/json', dataType: 'json', data: JSON.stringify(dto),
@@ -138,7 +134,7 @@
                     function (result) {
                         if (result === 0) { alert('게시글 등록에 실패했습니다. 잠시 후 다시 시도해주세요.'); }
                         else { if(confirm('게시글이 등록되었습니다. 확인하러 가시겠습니까?')) { location.href = `/board/read-playlist/${result}?code=${code}`; } else { location.href = `/board?code=${code}`; }}}
-                ]})
+            ]})
         }}
 
     function modalOpen() { document.getElementById('modal-insert-video').style.display = 'block'; }
