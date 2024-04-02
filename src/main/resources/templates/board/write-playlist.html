@@ -46,7 +46,7 @@
                     <tr><th colspan="3"><textarea class="form-control textarea-video-description" th:text="${p.description}"></textarea></th></tr>
                 </th:block>
             </th:block>
-            <tr><td colspan="3"><button type="button" class="btn btn-primary" onclick="insBoard()" style="width: 100%">등록</button></td></tr>
+            <tr><td colspan="3"><button type="button" class="btn btn-primary" onclick="insertBoard()" style="width: 100%">등록</button></td></tr>
             </tbody>
         </table>
     </form>
@@ -108,7 +108,7 @@
         row.before(row1, row2); // `등록` 버튼 바로 앞에 행 삽입
     });
 
-    function insBoard() {
+    function insertBoard() {
         const genre = $('#genre').val();
         const title = $('#title').val();
 

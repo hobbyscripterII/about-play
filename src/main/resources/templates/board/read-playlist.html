@@ -1,51 +1,24 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/default-layout}"
-      layout:fragment="main">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout/default-layout}" layout:fragment="main">
 <main>
     <h1 th:text="${title}"></h1>
-
     <form class="form-playlist-insert">
         <table class="table" id="table-playlist-insert" style="width: 700px">
             <tbody>
-            <tr>
-                <th scope="col">TITLE</th>
-                <th th:text="${board.title}"></th>
-            </tr>
-            <tr>
-                <th scope="col">DATE</th>
-                <th th:text="${#temporals.format(board.createdAt, 'yyyy년 MM월 dd일')}"></th>
-            </tr>
-            <tr>
-                <th scope="col">BY</th>
-                <th th:text="${board.nm}"></th>
-            </tr>
-            <tr>
-                <th scope="col">GENRE</th>
-                <th th:text="${board.genre}">
-                </th>
-            </tr>
+            <tr><th scope="col">제목</th><th th:text="${board.title}"></th></tr>
+            <tr><th scope="col">작성일</th><th th:text="${#temporals.format(board.createdAt, 'yyyy년 MM월 dd일')}"></th></tr>
+            <tr><th scope="col">작성자</th><th th:text="${board.nm}"></th></tr>
+            <tr><th scope="col">장르</th><th th:text="${board.genre}"></th></tr>
             <th:block th:each="p : ${board.playlist}">
-                <tr>
-                    <th colspan="2" class="th-video">
-                        <object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object>
-                    </th>
-                </tr>
-                <tr>
-                    <th colspan="2">
-                        <textarea class="form-control textarea-video-description" th:text="${p.description}" disabled></textarea>
-                    </th>
-                </tr>
+                <tr><th colspan="2" class="th-video"><object type="text/html" class="object-youtube" width="700px" height="400px" th:attr="data='https://www.youtube.com/embed/' + ${p.videoId}"></object></th></tr>
+                <tr><th colspan="2"><textarea class="form-control textarea-video-description" th:text="${p.description}" disabled></textarea></th></tr>
             </th:block>
             <tr>
                 <th colspan="2">
                     <div class="div-btn-group-wrap">
                         <th:block sec:authorize="isAuthenticated()">
                             <button th:if="${#authentication.principal.iuser eq board.iuser}" type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/update-playlist/}${board.iboard}?code=${code}'|" style="margin-right: 10px">수정</button>
-                            <button th:if="${#authentication.principal.iuser eq board.iuser}" type="button" class="btn btn-danger" onclick="delBoard()" style="margin-right: 10px">삭제</button>
+                            <button th:if="${#authentication.principal.iuser eq board.iuser}" type="button" class="btn btn-danger" onclick="deleteBoard()" style="margin-right: 10px">삭제</button>
                         </th:block>
                             <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/board(code=${param.code})}'|">목록</button>
                     </div>
@@ -57,28 +30,18 @@
 </main>
 
 <script th:inline="javascript">
-    const code = [[${param.code}]].toString();
-    const iboard = [[${board.iboard}]];
+    const code = [[${param.code}]].toString(); const iboard = [[${board.iboard}]];
 
-    function delBoard() {
-        if (confirm(`삭제된 글은 복구할 수 없습니다. 정말로 삭제하시겠습니까?`)) {
+    function deleteBoard() {
+        if (confirm('삭제된 글은 복구할 수 없습니다. 정말로 삭제하시겠습니까?')) {
             $.ajax({
-                type: `delete`,
-                url: `/board/` + iboard,
+                type: 'delete', url: `/board/${iboard}`,
                 success: [
                     function (result) {
-                        if (result === 1) {
-                            alert(`게시글이 삭제되었습니다.`);
-                            location.href = `/board?code=` + code;
-                        } else {
-                            alert(`게시글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.`);
-                        }
-                    }
-                ]
+                        if (result === 1) { alert('게시글이 삭제되었습니다.'); location.href = `/board?code=${code}`; }
+                        else { alert('게시글 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.'); }}]
             })
-        } else {
-            alert(`게시글 삭제가 취소되었습니다.`);
-        }
+        } else { alert(`게시글 삭제가 취소되었습니다.`); }
     }
 </script>
 </html>

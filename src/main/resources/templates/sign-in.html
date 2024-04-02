@@ -1,47 +1,26 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default-layout}"
-      layout:fragment="main">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default-layout}" layout:fragment="main">
 <main>
     <h1>로그인</h1>
     <div class="common-wrap">
         <form id="form-sign-in" th:action="@{/sign-in}" th:method="post" style="width: 350px">
             <table class="table" th:object="${dto}">
                 <tbody>
-                <tr class="alert alert-dismissible alert-danger center" role="alert" th:if="${param.error != null}" style="margin-bottom: 20px">
-                    <td colspan="2" style="background-color: #f7dddc !important">자격 증명에 실패하였습니다.</td>
-                </tr>
-                <tr>
-                    <td class="td-sign-in">이메일</td>
-                    <td><input type="text" id="email" name="email" class="form-control" autocomplete="off"></td>
-                </tr>
-                <tr>
-                    <td class="td-sign-in">패스워드</td>
-                    <td><input type="password" id="pwd" name="pwd" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><button type="button" class="btn btn-primary" onclick="login()" style="width: 100%">로그인</button></td>
-                </tr>
+                <tr class="alert alert-dismissible alert-danger center" role="alert" th:if="${param.error != null}" style="margin-bottom: 20px"><td colspan="2" style="background-color: #f7dddc !important">자격 증명에 실패하였습니다.</td></tr>
+                <tr><td class="td-sign-in">이메일</td><td><input type="text" id="email" name="email" class="form-control" autocomplete="off"></td></tr>
+                <tr><td class="td-sign-in">패스워드</td><td><input type="password" id="pwd" name="pwd" class="form-control"></td></tr>
+                <tr><td colspan="2"><button type="button" class="btn btn-primary" onclick="login()" style="width: 100%">로그인</button></td></tr>
                 </tbody>
             </table>
-            <div style="text-align: right">
-                <button type="button" class="btn btn-link" th:onclick="|location.href='@{/sign-up}'|" style="padding: 0">이메일 회원가입</button>
-            </div>
+            <div style="text-align: right"><button type="button" class="btn btn-link" th:onclick="|location.href='@{/sign-up}'|" style="padding: 0">이메일 회원가입</button></div>
         </form>
     </div>
 </main>
 
 <script>
     function login() {
-        if(!$('#email').val()) {
-            alert('이메일을 입력하지 않으셨습니다.');
-        } else if(!$('#pwd').val()) {
-            alert('비밀번호를 입력하지 않으셨습니다.');
-        } else {
-            $('#form-sign-in').submit();
-        }
-    }
+        if(!$('#email').val()) {alert('이메일을 입력하지 않으셨습니다.'); }
+        else if(!$('#pwd').val()) {alert('비밀번호를 입력하지 않으셨습니다.'); }
+        else {$('#form-sign-in').submit();}}
 </script>
 </html>
