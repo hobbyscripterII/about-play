@@ -1,140 +1,26 @@
-main {
-    position: absolute;
-    top: 258px;
-    left: 0;
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    padding: 5px 5px 200px 5px;
-    box-sizing: border-box;
-}
-
-.form-sign-up {
-    display: block;
-    width: 100%;
-}
-
-#div-teams-of-use {
-    display: block;
-    width: 100%;
-    text-align: center;
-}
-
-.errors, .errors-msg {
-    border-color: #dc3545;
-    color: red;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.errors-msg {
-    display: block;
-    width: 100%;
-    /*text-align: right;*/
-}
-
-#input-email-auth {
-    display: block;
-}
-
-/* ..... */
-#form-search {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-#input-keyword {
-    width: 280px;
-    margin-right: 10px;
-}
-
-.form-search-result {
-    width: 100%;
-    justify-content: center;
-    display: flex;
-}
-
-.modal-open {
-    padding-right: 0px !important;
-}
-
-#input-video-link {
-    margin-bottom: 40px;
-}
-
-.div-video {
-    font-size: 12px;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-.textarea-video-description {
-    resize: none;
-    height: 100px;
-}
-
-.td-sign-in {
-    text-align: center;
-    line-height: 38px;
-}
-
-table, .table {
-    margin: 0;
-    padding: 0;
-}
-
-#tr-email-auth {
-    display: none;
-}
-
-.div-btn-group-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    margin-right: 2rem;
-}
-
-.div-playlist-wrap {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.img-playlist-thumbnail {
-    width: 100%;
-}
-
-.div-playlist-card {
-    max-width: 25rem;
-}
-
-.span-playlist-header, .span-playlist-body {
-    font-size: 12px;
-}
-
-.span-playlist-footer {
-    font-size: 13px;
-}
-
-.span-playlist-header, .span-playlist-footer {
-    font-weight: bold;
-}
-
-.div-playlist-row-wrap {
-    display: flex;
-    justify-content: space-between;
-}
-
-.th-write-table {
-    text-align: center;
-    line-height: 38px;
-}
-
-.form-playlist-insert {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
+main { position: absolute; top: 258px; left: 0; display: flex; width: 100%; flex-wrap: wrap; padding: 5px 5px 200px 5px; box-sizing: border-box; }
+table, .table { margin: 0; padding: 0; }
+.form-sign-up { display: block; width: 100%; }
+#div-teams-of-use { display: block; width: 100%; text-align: center; }
+.errors, .errors-msg { color: red; border-color: #dc3545; font-size: 12px; font-weight: bold; }
+.errors-msg { display: block; width: 100%; }
+#input-email-auth { display: block; }
+#form-search { display: flex; width: 100%; justify-content: center; margin-bottom: 10px; }
+#input-keyword { width: 280px; margin-right: 10px; }
+.form-search-result { display: flex; width: 100%; justify-content: center; }
+.modal-open { padding-right: 0px !important; }
+#input-video-link { margin-bottom: 40px; }
+.div-video { font-size: 12px; margin-top: 10px; font-weight: bold; }
+.textarea-video-description { height: 100px; resize: none; }
+.td-sign-in { text-align: center; line-height: 38px; }
+#tr-email-auth { display: none; }
+.div-btn-group-wrap { display: flex; width: 100%; justify-content: end; margin-right: 2rem; }
+.div-playlist-wrap { display: flex; width: 100%; justify-content: space-around; flex-wrap: wrap; }
+.img-playlist-thumbnail { width: 100%; }
+.div-playlist-card { max-width: 25rem; }
+.span-playlist-header, .span-playlist-body { font-size: 12px; }
+.span-playlist-footer { font-size: 13px; }
+.span-playlist-header, .span-playlist-footer { font-weight: bold; }
+.div-playlist-row-wrap { display: flex; justify-content: space-between; }
+.th-write-table { text-align: center; line-height: 38px; }
+.form-playlist-insert { width: 100%; display: flex; justify-content: center; }

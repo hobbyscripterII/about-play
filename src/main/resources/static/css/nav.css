@@ -1,84 +1,11 @@
-nav {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    /*position: fixed;*/
-    /*top: 50px;*/
-    left: 0;
-    width: 100%;
-    /*height: 40px;*/
-    background-color: white;
-    z-index: 9999;
-}
-
-.navbar {
-    position: fixed;
-}
-
-.nav-parent {
-    box-sizing: border-box;
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin: 0;
-}
-
-.nav-parent > a:hover, .nav-child > a:hover {
-    background-color: black;
-    color: white;
-    font-weight: bold;
-    transition: 0.5s;
-}
-
-.nav-parent > a, .nav-child > a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    color: black;
-    background-color: white;
-}
-
-.nav-child > a {
-    box-sizing: border-box;
-    height: 50px;
-    padding: 5px 0 5px 0;
-}
-
-.nav-child-wrap {
-    height: 500px;
-    display: none;
-}
-
-.nav-parent:hover .nav-child-wrap {
-    box-sizing: border-box;
-    display: block;
-}
-
-.banner {
-    position: relative;
-    top: 58px;
-    left: 0;
-    width: 100%;
-    height: 200px;
-    background-image: url("/img/img-banner.jpg");
-}
-
-.banner > span {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    line-height: 200px;
-    color: white;
-}
-
-.btn-nav {
-    height: 45px;
-    padding: 0 10px 0 10px;
-    font-size: 14px;
-    font-weight: bold;
-}
+nav { box-sizing: border-box; display: flex; justify-content: space-between; left: 0; width: 100%; background-color: white; z-index: 9999; }
+.navbar { position: fixed; }
+.nav-parent { box-sizing: border-box; display: block; width: 100%; text-align: center; margin: 0; }
+.nav-parent > a:hover, .nav-child > a:hover { background-color: black; color: white; font-weight: bold; transition: 0.5s; }
+.nav-parent > a, .nav-child > a { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; color: black; background-color: white; }
+.nav-child > a { box-sizing: border-box; height: 50px; padding: 5px 0 5px 0; }
+.nav-child-wrap { height: 500px; display: none; }
+.nav-parent:hover .nav-child-wrap { box-sizing: border-box; display: block; }
+.banner { position: relative; top: 58px; left: 0; width: 100%; height: 200px; background-image: url("/img/img-banner.jpg"); }
+.banner > span { display: block; width: 100%; height: 100%; text-align: center; font-size: 40px; font-weight: bold; line-height: 200px; color: white; }
+.btn-nav { height: 45px; padding: 0 10px 0 10px; font-size: 14px; font-weight: bold; }
