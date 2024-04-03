@@ -2,6 +2,7 @@ package com.project.youtubeplaylistrecommend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
@@ -39,8 +40,9 @@ public class BoardEntity extends BaseEntity {
     @ColumnDefault("'0'")
     private int view;
 
-//    @OneToMany(mappedBy = "iplaylist", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "iplaylist")
-    private PlaylistEntity playlistEntity;
+    // mappedBy - N 관계 테이블의 fk 컬럼에 해당되는 멤버변수명
+    // orphanRemoval - 고아 객체 제거
+    @OneToMany(mappedBy = "boardEntity", orphanRemoval = true) // 1:N
+    @ToString.Exclude
+    private List<PlaylistEntity> playlistEntity = new ArrayList();
 }

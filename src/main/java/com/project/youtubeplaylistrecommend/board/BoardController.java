@@ -51,7 +51,7 @@ public class BoardController {
     }
 
     @GetMapping("/update-playlist/{iboard}")
-    public String updPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable long iboard, Model model) {
+    public String updPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable(name = "iboard") long iboard, Model model) {
         getTitleAndGenre(code, model);
         model.addAttribute("dto", boardService.selPlaylistBoard(iboard));
         return "/board/write-playlist";

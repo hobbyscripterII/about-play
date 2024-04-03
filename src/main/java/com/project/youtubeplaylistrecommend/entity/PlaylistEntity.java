@@ -16,7 +16,8 @@ public class PlaylistEntity extends BaseEntity {
     @Column(columnDefinition = "BIGINT UNSIGNED")
     private long iplaylist;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // @ManyToOne + @JoinColumn - fk 지정
+    @ManyToOne(fetch = FetchType.LAZY) // N:1
     @JoinColumn(name = "iboard", columnDefinition = "BIGINT UNSIGNED", nullable = false)
     private BoardEntity boardEntity;
 
