@@ -12,11 +12,9 @@ import com.project.youtubeplaylistrecommend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +63,12 @@ public class BoardService {
         boardRepository.save(boardEntity);
 
         for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
+//            List<PlaylistEntity> playlistEntityList = boardEntity.getPlaylistEntity();
+//            List<Long> deletePlaylist = playlistEntityList.stream()
+//                    .filter(e -> e.getIplaylist() != list.getIplaylist())
+//                    .map(e -> e.getIplaylist())
+//                    .collect(Collectors.toList());
+
             Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
 
             optionalPlaylistEntity.ifPresent(e -> {
