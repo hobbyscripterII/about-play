@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.project.youtubeplaylistrecommend.common.Const.FAIL;
 import static com.project.youtubeplaylistrecommend.common.Const.SUCCESS;
@@ -63,11 +64,13 @@ public class BoardService {
         boardRepository.save(boardEntity);
 
         for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
-//            List<PlaylistEntity> playlistEntityList = boardEntity.getPlaylistEntity();
-//            List<Long> deletePlaylist = playlistEntityList.stream()
-//                    .filter(e -> e.getIplaylist() != list.getIplaylist())
-//                    .map(e -> e.getIplaylist())
-//                    .collect(Collectors.toList());
+            boardEntity.getPlaylistEntity().stream()
+                    .filter(e -> e.getIplaylist() != list.getIplaylist())
+                    .map(e -> {
+                        playlistRepository.delete(playlistRepository.getReferenceById(e.getIplaylist()));
+                        return e.getIplaylist();
+                    })
+                    .collect(Collectors.toList());
 
             Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
 
@@ -165,8 +168,7 @@ public class BoardService {
                         .genre(boardEntity.getGenreCodeEntity().getGenreName())
                         .playlist(boardRepository.selPlaylistBoard(iboard)
                                 .stream()
-                                .map(item -> BoardPlaylistSelVo.Playlist
-                                        .builder()
+                                .map(item -> BoardPlaylistSelVo.Playlist.builder()
                                         .iplaylist(item.getIplaylist())
                                         .videoId(item.getVideoId())
                                         .description(item.getDescription())
