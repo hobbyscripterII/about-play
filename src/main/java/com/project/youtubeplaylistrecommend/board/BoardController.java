@@ -21,6 +21,7 @@ public class BoardController {
     private final BoardService boardService;
     private final GenreService genreService;
 
+    // 중복 메소드 제거
     private void getTitleAndGenre(int code, Model model) {
         getTitle(code, model);
         model.addAttribute("genre", genreService.getGenre());
@@ -69,21 +70,25 @@ public class BoardController {
     @PostMapping("/write-playlist")
     @ResponseBody
     public long insPlaylistBoard(@RequestBody BoardPlaylistInsDto dto) {
-        log.info("dto = {}", dto);
         return boardService.insPlaylistBoard(dto);
     }
 
-    @DeleteMapping("{iboard}")
+    @DeleteMapping("/{iboard}")
     @ResponseBody
     public int delBoard(@PathVariable(name = "iboard") int iboard) {
         return boardService.delBoard(iboard);
     }
 
     private String getBoardName(int code) {
-        if (code == 0) { return null; }
-        else {
+        if (code == 0) {
+            return null;
+        } else {
             String codeToString = null;
-            switch (code) { case 1 -> codeToString = BoardEnum.NOTICE.getName(); case 2 -> codeToString = BoardEnum.MUSIC_RECOMMEND.getName(); case 3 -> codeToString = BoardEnum.FREE.getName(); }
+            switch (code) {
+                case 1 -> codeToString = BoardEnum.NOTICE.getName();
+                case 2 -> codeToString = BoardEnum.MUSIC_RECOMMEND.getName();
+                case 3 -> codeToString = BoardEnum.FREE.getName();
+            }
             return codeToString;
         }
     }

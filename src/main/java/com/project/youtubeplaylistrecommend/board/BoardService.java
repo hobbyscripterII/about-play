@@ -16,6 +16,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,13 +40,9 @@ public class BoardService {
             long iboard = dto.getIboard();
 
             if (Utils.isNotNull(iboard)) {
-                boardRepository.findById(iboard)
-                        .ifPresent((boardEntity) -> {
-                            UserEntity userEntity = userRepository.getReferenceById(boardEntity.getUserEntity().getIuser());
-                            GenreCodeEntity genreCodeEntity = genreRepository.getReferenceById(boardEntity.getGenreCodeEntity().getIgenre());
-                            BoardCodeEntity boardCodeEntity = boardCodeRepository.getReferenceById(boardEntity.getBoardCodeEntity().getIboardcode());
-                            insPlaylistBoard(dto, boardEntity, userEntity, genreCodeEntity, boardCodeEntity);
-                        });
+                boardRepository.findById(iboard).ifPresent((e) -> {
+                    insPlaylistBoard(dto, e);
+                });
             } else {
                 BoardEntity boardEntity = new BoardEntity();
                 UserEntity userEntity = userRepository.getReferenceById(iuser);
@@ -55,8 +52,36 @@ public class BoardService {
                 iboard = boardEntity.getIboard();
             }
             return iboard;
+        } catch (Exception e) {
+            return FAIL;
         }
-        catch (Exception e) { return FAIL; }
+    }
+
+    private void insPlaylistBoard(BoardPlaylistInsDto dto, BoardEntity boardEntity) {
+        boardEntity.setUserEntity(boardEntity.getUserEntity());
+        boardEntity.setGenreCodeEntity(boardEntity.getGenreCodeEntity());
+        boardEntity.setBoardCodeEntity(boardEntity.getBoardCodeEntity());
+        boardEntity.setTitle(dto.getTitle());
+        boardRepository.save(boardEntity);
+
+        for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
+            Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
+
+            optionalPlaylistEntity.ifPresent(e -> {
+                e.setBoardEntity(boardEntity);
+                e.setVideoId(list.getVideoId());
+                e.setDescription(list.getDescription());
+            });
+
+            optionalPlaylistEntity.orElseGet(() -> {
+                PlaylistEntity playlistEntity = new PlaylistEntity();
+                playlistEntity.setBoardEntity(boardEntity);
+                playlistEntity.setVideoId(list.getVideoId());
+                playlistEntity.setDescription(list.getDescription());
+                playlistRepository.save(playlistEntity);
+                return playlistEntity;
+            });
+        }
     }
 
     private void insPlaylistBoard(BoardPlaylistInsDto dto, BoardEntity boardEntity, UserEntity userEntity, GenreCodeEntity genreCodeEntity, BoardCodeEntity boardCodeEntity) {
@@ -68,11 +93,7 @@ public class BoardService {
 
         for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
             Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
-            PlaylistEntity playlistEntity;
-
-            if(optionalPlaylistEntity.isPresent()) { playlistEntity = optionalPlaylistEntity.get(); }
-            else { playlistEntity = new PlaylistEntity(); }
-
+            PlaylistEntity playlistEntity = optionalPlaylistEntity.orElseGet(PlaylistEntity::new);
             playlistEntity.setBoardEntity(boardEntity);
             playlistEntity.setVideoId(list.getVideoId());
             playlistEntity.setDescription(list.getDescription());
@@ -91,8 +112,11 @@ public class BoardService {
                 return SUCCESS;
             } else {
                 throw new Exception();
-            }}
-        catch (Exception e) { e.printStackTrace(); return FAIL; }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return FAIL;
+        }
     }
 
     @Transactional
@@ -114,7 +138,8 @@ public class BoardService {
                     .toList();
         } catch (Exception e) {
             // 추후 수정
-            e.printStackTrace(); return null;
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -143,8 +168,13 @@ public class BoardService {
                                         .description(item.getDescription())
                                         .build())
                                 .toList())
-                        .build(); }
-            else { return null; }
-        } catch (Exception e) { e.printStackTrace(); return null; }
+                        .build();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

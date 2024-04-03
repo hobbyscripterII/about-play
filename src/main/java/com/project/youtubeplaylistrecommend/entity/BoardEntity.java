@@ -39,6 +39,8 @@ public class BoardEntity extends BaseEntity {
     @ColumnDefault("'0'")
     private int view;
 
-    @OneToMany(mappedBy = "iplaylist", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<PlaylistEntity> playlistEntity = new ArrayList<>();
+//    @OneToMany(mappedBy = "iplaylist", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "iplaylist")
+    private PlaylistEntity playlistEntity;
 }

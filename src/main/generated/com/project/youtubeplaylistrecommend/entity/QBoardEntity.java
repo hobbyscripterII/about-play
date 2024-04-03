@@ -44,7 +44,7 @@ public class QBoardEntity extends EntityPathBase<BoardEntity> {
     //inherited
     public final NumberPath<Long> lastUpdatedUser = _super.lastUpdatedUser;
 
-    public final ListPath<PlaylistEntity, QPlaylistEntity> playlistEntity = this.<PlaylistEntity, QPlaylistEntity>createList("playlistEntity", PlaylistEntity.class, QPlaylistEntity.class, PathInits.DIRECT2);
+    public final QPlaylistEntity playlistEntity;
 
     public final StringPath title = createString("title");
 
@@ -72,6 +72,7 @@ public class QBoardEntity extends EntityPathBase<BoardEntity> {
         super(type, metadata, inits);
         this.boardCodeEntity = inits.isInitialized("boardCodeEntity") ? new QBoardCodeEntity(forProperty("boardCodeEntity")) : null;
         this.genreCodeEntity = inits.isInitialized("genreCodeEntity") ? new QGenreCodeEntity(forProperty("genreCodeEntity")) : null;
+        this.playlistEntity = inits.isInitialized("playlistEntity") ? new QPlaylistEntity(forProperty("playlistEntity"), inits.get("playlistEntity")) : null;
         this.userEntity = inits.isInitialized("userEntity") ? new QUserEntity(forProperty("userEntity")) : null;
     }
 
