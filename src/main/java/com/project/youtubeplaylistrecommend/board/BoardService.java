@@ -38,11 +38,12 @@ public class BoardService {
             long iuser = MyAuthentication.myUserDetails().getIuser();
             long iboard = dto.getIboard();
 
+            // 1. 게시글 있을 경우 게시글 및 플레이리스트 수정 작업 진행
             if (Utils.isNotNull(iboard)) {
-                boardRepository.findById(iboard).ifPresent((e) -> {
-                    insPlaylistBoard(dto, e);
-                });
+                boardRepository.findById(iboard).ifPresent((e) -> insPlaylistBoard(dto, e));
+                boardRepository.findById(iboard).orElseThrow(() -> new Exception()); // 추후 커스텀 예외 처리 추가
             } else {
+                // 2. 게시글 없을 경우 게시글 및 플레이리스트 최초 등록 작업 진행
                 BoardEntity boardEntity = new BoardEntity();
                 UserEntity userEntity = userRepository.getReferenceById(iuser);
                 GenreCodeEntity genreCodeEntity = genreRepository.getReferenceById(dto.getGenre());
@@ -56,6 +57,7 @@ public class BoardService {
         }
     }
 
+    // >>>>> 리팩토링 작업 필요
     private void insPlaylistBoard(BoardPlaylistInsDto dto, BoardEntity boardEntity) {
         boardEntity.setUserEntity(boardEntity.getUserEntity());
         boardEntity.setGenreCodeEntity(boardEntity.getGenreCodeEntity());
@@ -64,13 +66,13 @@ public class BoardService {
         boardRepository.save(boardEntity);
 
         for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
+            // 게시글 수정 시 사용자가 특정 플레이리스트를 삭제했을 경우 해당 플레이리스트 삭제
             boardEntity.getPlaylistEntity().stream()
                     .filter(e -> e.getIplaylist() != list.getIplaylist())
                     .map(e -> {
                         playlistRepository.delete(playlistRepository.getReferenceById(e.getIplaylist()));
                         return e.getIplaylist();
-                    })
-                    .collect(Collectors.toList());
+                    });
 
             Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
 
@@ -90,6 +92,7 @@ public class BoardService {
             });
         }
     }
+    // >>>>>
 
     private void insPlaylistBoard(BoardPlaylistInsDto dto, BoardEntity boardEntity, UserEntity userEntity, GenreCodeEntity genreCodeEntity, BoardCodeEntity boardCodeEntity) {
         boardEntity.setUserEntity(userEntity);
