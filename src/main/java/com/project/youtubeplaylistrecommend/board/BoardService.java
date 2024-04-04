@@ -15,8 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.project.youtubeplaylistrecommend.common.Const.FAIL;
@@ -41,7 +43,7 @@ public class BoardService {
             // 1. 게시글 있을 경우 게시글 및 플레이리스트 수정 작업 진행
             if (Utils.isNotNull(iboard)) {
                 boardRepository.findById(iboard).ifPresent((e) -> insPlaylistBoard(dto, e));
-                boardRepository.findById(iboard).orElseThrow(() -> new Exception()); // 추후 커스텀 예외 처리 추가
+                boardRepository.findById(iboard).orElseThrow(Exception::new); // 추후 커스텀 예외 처리 추가
             } else {
                 // 2. 게시글 없을 경우 게시글 및 플레이리스트 최초 등록 작업 진행
                 BoardEntity boardEntity = new BoardEntity();
@@ -57,42 +59,37 @@ public class BoardService {
         }
     }
 
-    // >>>>> 리팩토링 작업 필요
     private void insPlaylistBoard(BoardPlaylistInsDto dto, BoardEntity boardEntity) {
+        // 게시글 수정
         boardEntity.setUserEntity(boardEntity.getUserEntity());
         boardEntity.setGenreCodeEntity(boardEntity.getGenreCodeEntity());
         boardEntity.setBoardCodeEntity(boardEntity.getBoardCodeEntity());
         boardEntity.setTitle(dto.getTitle());
         boardRepository.save(boardEntity);
 
-        for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
-            // 게시글 수정 시 사용자가 특정 플레이리스트를 삭제했을 경우 해당 플레이리스트 삭제
-            boardEntity.getPlaylistEntity().stream()
-                    .filter(e -> e.getIplaylist() != list.getIplaylist())
-                    .map(e -> {
-                        playlistRepository.delete(playlistRepository.getReferenceById(e.getIplaylist()));
-                        return e.getIplaylist();
-                    });
+        // 플레이리스트 삭제 작업
 
-            Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
+        dto.getPlaylist().forEach(i -> {
+            Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(i.getIplaylist());
 
+            // 플레이리스트 수정 작업
             optionalPlaylistEntity.ifPresent(e -> {
                 e.setBoardEntity(boardEntity);
-                e.setVideoId(list.getVideoId());
-                e.setDescription(list.getDescription());
+                e.setVideoId(i.getVideoId());
+                e.setDescription(i.getDescription());
             });
 
+            // 플레이리스트 추가 작업
             optionalPlaylistEntity.orElseGet(() -> {
                 PlaylistEntity playlistEntity = new PlaylistEntity();
                 playlistEntity.setBoardEntity(boardEntity);
-                playlistEntity.setVideoId(list.getVideoId());
-                playlistEntity.setDescription(list.getDescription());
+                playlistEntity.setVideoId(i.getVideoId());
+                playlistEntity.setDescription(i.getDescription());
                 playlistRepository.save(playlistEntity);
                 return playlistEntity;
             });
-        }
+        });
     }
-    // >>>>>
 
     private void insPlaylistBoard(BoardPlaylistInsDto dto, BoardEntity boardEntity, UserEntity userEntity, GenreCodeEntity genreCodeEntity, BoardCodeEntity boardCodeEntity) {
         boardEntity.setUserEntity(userEntity);
@@ -101,14 +98,14 @@ public class BoardService {
         boardEntity.setTitle(dto.getTitle());
         boardRepository.save(boardEntity);
 
-        for (BoardPlaylistInsDto.Playlist list : dto.getPlaylist()) {
-            Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(list.getIplaylist());
+        dto.getPlaylist().forEach(i -> {
+            Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(i.getIplaylist());
             PlaylistEntity playlistEntity = optionalPlaylistEntity.orElseGet(PlaylistEntity::new);
             playlistEntity.setBoardEntity(boardEntity);
-            playlistEntity.setVideoId(list.getVideoId());
-            playlistEntity.setDescription(list.getDescription());
+            playlistEntity.setVideoId(i.getVideoId());
+            playlistEntity.setDescription(i.getDescription());
             playlistRepository.save(playlistEntity);
-        }
+        });
     }
 
     @Transactional
