@@ -37,6 +37,7 @@ public class BoardService {
     @Transactional
     public long insPlaylistBoard(BoardPlaylistInsDto dto) {
         try {
+            // pk
             long iuser = MyAuthentication.myUserDetails().getIuser();
             long iboard = dto.getIboard();
 
@@ -67,19 +68,24 @@ public class BoardService {
         boardEntity.setTitle(dto.getTitle());
         boardRepository.save(boardEntity);
 
-        // 플레이리스트 삭제 작업
+        // 플레이리스트 삭제
+        List<Long> dtoGetPlaylist = dto.getPlaylist().stream().map(BoardPlaylistInsDto.Playlist::getIplaylist).toList();
+        List<Long> boardEntityPlaylist = boardEntity.getPlaylistEntity().stream().map(PlaylistEntity::getIplaylist).toList();
+        // 중복되지않은 플레이리스트 삭제(클라이언트에서 삭제됐을 경우 중복되지 않기 때문에 필터를 통해 추가)
+        List<Long> deletePlaylist = boardEntityPlaylist.stream().filter(e -> dtoGetPlaylist.stream().noneMatch(Predicate.isEqual(e))).toList();
+        deletePlaylist.forEach(i -> playlistRepository.delete(playlistRepository.getReferenceById(i)));
 
         dto.getPlaylist().forEach(i -> {
             Optional<PlaylistEntity> optionalPlaylistEntity = playlistRepository.findById(i.getIplaylist());
 
-            // 플레이리스트 수정 작업
+            // 플레이리스트 수정
             optionalPlaylistEntity.ifPresent(e -> {
                 e.setBoardEntity(boardEntity);
                 e.setVideoId(i.getVideoId());
                 e.setDescription(i.getDescription());
             });
 
-            // 플레이리스트 추가 작업
+            // 플레이리스트 추가
             optionalPlaylistEntity.orElseGet(() -> {
                 PlaylistEntity playlistEntity = new PlaylistEntity();
                 playlistEntity.setBoardEntity(boardEntity);
