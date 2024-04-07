@@ -14,7 +14,7 @@
             </ul>
             <form class="d-flex">
                 <img onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=cb038f5f9a3ebddca7cc97a4d8f6d398&redirect_uri=http://localhost:8080/accountbook/kakao-login&response_type=code'" th:src="@{/img/img-btn-kakao.png}" style="cursor: pointer; height: 45px; margin-right: 10px">
-                <th:block sec:authorize="isAnonymous()"><button type="button" class="btn btn-success btn-nav" th:onclick="|location.href='@{/sign-in}'|">이메일 회원가입/로그인</button></th:block>
+                <th:block sec:authorize="isAnonymous()"><button type="button" class="btn btn-danger btn-nav" th:onclick="|location.href='@{/sign-in}'|">이메일 회원가입/로그인</button></th:block>
                 <th:block sec:authorize="isAuthenticated()"><button type="button" class="btn btn-light btn-nav" onclick="signOut()">로그아웃</button></th:block>
                 <!--                <input class="form-control me-sm-2" type="search" placeholder="Search">-->
                 <!--                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>-->
