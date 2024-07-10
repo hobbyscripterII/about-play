@@ -38,23 +38,23 @@ public class BoardController {
 
         if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
             model.addAttribute("playlist", boardService.getPlaylistBoard(pageable));
-            return "/board/list-playlist";
+            return "board/list-playlist";
         }
-        return "/board/list";
+        return "board/list";
     }
 
     @GetMapping("/read-playlist/{iboard}")
     public String selPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable(name = "iboard") long iboard, Model model) {
         getTitle(code, model);
         model.addAttribute("board", boardService.selPlaylistBoard(iboard));
-        return "/board/read-playlist";
+        return "board/read-playlist";
     }
 
     @GetMapping("/update-playlist/{iboard}")
     public String updPlaylistBoard(@RequestParam(name = "code") int code, @PathVariable(name = "iboard") long iboard, Model model) {
         getTitleAndGenre(code, model);
         model.addAttribute("dto", boardService.selPlaylistBoard(iboard));
-        return "/board/write-playlist";
+        return "board/write-playlist";
     }
 
     @GetMapping("/write-playlist")
@@ -62,9 +62,9 @@ public class BoardController {
         if (code == BoardEnum.MUSIC_RECOMMEND.getCode()) {
             getTitleAndGenre(code, model);
             model.addAttribute("dto", new BoardPlaylistInsDto());
-            return "/board/write-playlist";
+            return "board/write-playlist";
         }
-        return "/home"; // 추후 수정
+        return "home"; // 추후 수정
     }
 
     @PostMapping("/write-playlist")

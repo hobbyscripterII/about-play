@@ -6,8 +6,10 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
+                <!--
                 <li class="nav-item"><a class="nav-link active" th:href="@{/board(code = 1)}">공지 게시판<span class="visually-hidden">(current)</span></a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/board(code = 3)}">자유 게시판</a></li>
+                -->
                 <li class="nav-item"><a class="nav-link" th:href="@{/board(code = 2)}">플레이리스트 추천</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/search}">유튜브 검색(API 테스트용)</a></li>
 <!--                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')"><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">관리자 페이지</a><div class="dropdown-menu"><a class="dropdown-item" href="/admin">홈</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a></div></li></th:block>-->
@@ -25,5 +27,12 @@
 
 <div class="banner"><span>banner div</span></div>
 
-<script>function signOut() { if (confirm('정말로 로그아웃하시겠습니까?')) { alert('로그아웃이 완료되었습니다.'); location.href='/sign-out'; }}</script>
+<script>
+    function signOut() {
+        if (confirm('정말로 로그아웃하시겠습니까?')) {
+            alert('로그아웃이 완료되었습니다.');
+            location.href='/sign-out';
+        }
+    }
+</script>
 </html>

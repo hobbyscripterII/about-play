@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping("/sign-up")
     public String signUp(Model model) {
         model.addAttribute("dto", new UserSignUpDto());
-        return "/sign-up";
+        return "sign-up";
     }
 
     @PostMapping("/sign-up")
@@ -42,7 +42,7 @@ public class UserController {
             }
 
             if (bindingResult.hasErrors()) {
-                return "/sign-up";
+                return "sign-up";
             } else {
                 int nameCheckResult = userService.nameCheck(dto.getName());
                 int emailAuthCheckResult = emailAuthService.emailAuthCheck(dto.getEmail());
@@ -56,14 +56,14 @@ public class UserController {
                 }
 
                 if (bindingResult.hasErrors()) {
-                    return "/sign-up";
+                    return "sign-up";
                 } else {
                     int signUpResult = userService.signUp(dto);
                     if (Utils.isNotNull(signUpResult)) {
-                        return "/sign-up-success";
+                        return "sign-up-success";
                     }
                 }
-                return "/sign-up";
+                return "sign-up";
             }
         } catch (Exception e) {
             throw new NullPointerException();
@@ -72,7 +72,7 @@ public class UserController {
 
     @GetMapping("/sign-up-success")
     public String signUpSuccess() {
-        return "/sign-up-success";
+        return "sign-up-success";
     }
 
     @GetMapping("/name-check")

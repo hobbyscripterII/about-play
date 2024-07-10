@@ -18,7 +18,7 @@ public class YoutubeController {
 
     @GetMapping("/search")
     public String search() {
-        return "/youtube-search-test";
+        return "youtube-search-test";
     }
 
     @GetMapping("/search/{keyword}")
@@ -31,6 +31,6 @@ public class YoutubeController {
         } catch (Exception e) {
             throw new Exception();
         }
-        return "/youtube-search-test";
+        return "youtube-search-test";
     }
 }
